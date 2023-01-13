@@ -1,0 +1,7 @@
+# Exclude RStudio things
+.RData
+.Rhistory
+
+# Exclude local reference materials
+/examples/**
+.Rproj.user
