@@ -18,7 +18,7 @@ ui <- fluidPage(
     tabsetPanel(
       tabPanel("Innate Rank"),
       tabPanel("Composite Risk"),
-      tabPanel("Explainer")
+      tabPanel("Explainer", includeMarkdown("explainer.md"))
     )
   )
 )
