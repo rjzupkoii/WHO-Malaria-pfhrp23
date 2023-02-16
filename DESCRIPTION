@@ -1,0 +1,11 @@
+Package: WHO-Malaria-pfhrp23
+Title: Pfhrp2/3 Deletion Explorer
+Version: 0.0.0.9000
+Authors@R: c(
+    person("Robert", "Zupko", , "rzupko@mtu.edu", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-8757-483X"))
+    )
+Description: An R Shiny application that provides a "dashboard" like enviorment to explore the risk assoicated with an increase in pfhrp2/3 deletions.
+License: use_mit_license()
+Encoding: UTF-8
+Imports: 
+    shiny
