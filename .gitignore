@@ -5,3 +5,6 @@
 # Exclude local reference materials
 /examples/**
 .Rproj.user
+
+# Exclude any temporary directories
+**/temp/**
