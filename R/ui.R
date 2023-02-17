@@ -27,6 +27,7 @@ ui <- fluidPage(
           selectInput("pr_treatment_rdt_outcome",
                       label = "Probability of being treated based only on RDT outcome",
                       choices = choices_list, selected = 1),
+          helpText(includeMarkdown("../UI/treatment.md")),
           )),
       
       bsCollapsePanel("Malaria Prevalence",
@@ -39,8 +40,17 @@ ui <- fluidPage(
       
       bsCollapsePanel("HRP3 Antigen Effects",
         wellPanel(
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum pulvinar condimentum arcu. Curabitur tempus molestie ipsum, eget egestas augue accumsan eu. Nulla facilisis tincidunt dui."
+          selectInput("hrp3_antigen",
+                      label = "HRP3 Antigen Effects",
+                      choices = choices_list, selected = 2),
+          helpText(includeMarkdown("../UI/antigen.md")),
         ))
+    ),
+    
+    # Reserving this space for more controls
+    br(),
+    wellPanel(
+      "Controls Placeholder"
     )
   ), 
   
