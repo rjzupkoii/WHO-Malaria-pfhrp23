@@ -1,8 +1,9 @@
 # ui.R
 #
 # Define the UI for the single page application
-library(shiny)
+library(markdown)
 library(shinyBS)
+library(shinycssloaders)
 
 # Define our common choices
 choices_list <- list("Optimistic" = 1, "Central" = 2,"Worst" = 3)
@@ -58,12 +59,12 @@ ui <- fluidPage(
   mainPanel(
     tabsetPanel(
       tabPanel("Innate Rank",
-        plotOutput("plot_innate"),
+        plotOutput("plot_innate") %>% withSpinner(color = '#E5E4E2'),
         includeMarkdown("../UI/innate.md")
       ),
       
       tabPanel("Composite Risk",
-        plotOutput("plot_composite",),
+        plotOutput("plot_composite") %>% withSpinner(color = '#E5E4E2'),
         includeMarkdown("../UI/composite.md")
       ),
       

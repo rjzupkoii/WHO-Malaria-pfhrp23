@@ -8,5 +8,10 @@ Description: An R Shiny application that provides a "dashboard" like enviorment 
 License: MIT + file LICENSE
 Encoding: UTF-8
 Imports: 
+    ggplot2,
+    magrittr,
+    markdown,
+    rjson,
     shiny,
-    shinyBS
+    shinyBS,
+    shinycssloaders

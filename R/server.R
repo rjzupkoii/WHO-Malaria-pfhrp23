@@ -2,7 +2,6 @@
 #
 # Define the back-end functionality for the app.
 library(rjson)
-library(shiny)
 
 source("plotting.R")
 

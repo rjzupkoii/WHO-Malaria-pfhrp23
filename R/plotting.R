@@ -3,6 +3,10 @@
 # This file contains all of the logic associated with the generation of plots. 
 # We assume that the caller (i.e., server.R) will handle all of the processing
 # that is specific to the web environment.
+library(ggplot2)
+
+risk_palette = c('#882255', '#DDCC77', '#88CCEE', '#44AA99', '#E5E4E2')
+risk_labels  = c('High', 'Moderate', 'Slight', 'Marginal', 'No Data')
 
 plot_map <- function(prev = "central",
                      treat = "central",
@@ -26,8 +30,9 @@ plot_map <- function(prev = "central",
   map$hrp2_risk <- scenario_maps$map_data[[ind]]$hrp2_risk
   map$hrp2_freq <- scenario_maps$map_data[[ind]]$hrp2_freq
   
-  # Produce the plot 
-  plot(map[, c("hrp2_freq", "hrp2_risk")])
+  # Produce the hrp2_risk map
+  map %>% ggplot() + 
+    geom_sf(aes(fill = factor(hrp2_risk))) + 
+    scale_fill_manual(values = risk_palette, labels = risk_labels, name = "hrp3 risk") + 
+    theme_void()
 }
-
-#plot_map()
