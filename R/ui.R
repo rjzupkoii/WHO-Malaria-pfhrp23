@@ -57,8 +57,16 @@ ui <- fluidPage(
   # Main panel for displaying the maps
   mainPanel(
     tabsetPanel(
-      tabPanel("Innate Rank"),
-      tabPanel("Composite Risk"),
+      tabPanel("Innate Rank",
+        plotOutput("plot_innate"),
+        includeMarkdown("../UI/innate.md")
+      ),
+      
+      tabPanel("Composite Risk",
+        plotOutput("plot_composite",),
+        includeMarkdown("../UI/composite.md")
+      ),
+      
       tabPanel("Explainer", includeMarkdown("../UI/explainer.md"))
     )
   )
