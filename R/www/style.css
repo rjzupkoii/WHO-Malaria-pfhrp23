@@ -1,0 +1,24 @@
+
+/* The following sets the style of the collapsible panels */
+h4.panel-title {
+    font-weight: bold;
+    font-size: 1em;
+}
+
+/* The following adds an arrow to the side to let the user know they can open or close the panel.
+   Original source on StackOverflow (https://stackoverflow.com/a/73266101/1185) */
+.panel-heading .panel-title a.collapsed:after {
+    transform: rotate(180deg);
+    transition: .5s ease-in-out;
+}
+
+.panel-heading .panel-title a:after {
+    content:'⏶';
+    text-align: right;
+    float:right;
+    transition: .5s ease-in-out;
+}
+
+.panel-heading .panel-title a:not([class]):after {
+    transform: rotate(180deg);
+}

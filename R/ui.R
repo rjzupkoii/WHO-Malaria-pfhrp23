@@ -8,6 +8,9 @@ library(shinyBS)
 choices_list <- list("Optimistic" = 1, "Central" = 2,"Worst" = 3)
 
 ui <- fluidPage(
+  tags$head(
+    tags$link(rel = "stylesheet", type = "text/css", href = "style.css")
+  ),
 
   # Set the main application title
   titlePanel("WHO hrp2/3 deletions projections"),
