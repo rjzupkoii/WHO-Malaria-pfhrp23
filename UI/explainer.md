@@ -1,4 +1,4 @@
-# *pfhrp2/3* Deletion Risk Explainer
+# *pfhrp2\/3* Deletion Risk Explainer
 
 ## Introduction
 Placeholder text
