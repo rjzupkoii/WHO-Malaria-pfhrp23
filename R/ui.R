@@ -1,12 +1,12 @@
 # ui.R
 #
 # Define the UI for the single page application
+library(magrittr)
 library(markdown)
 library(shinyBS)
 library(shinycssloaders)
 
-# Define our common choices
-choices_list <- list("Optimistic" = 1, "Central" = 2,"Worst" = 3)
+source("shared.R")
 
 ui <- fluidPage(
   tags$head(
