@@ -2,29 +2,37 @@
 #
 # Define the back-end functionality for the app.
 library(rjson)
+library(shiny)
 
 source("plotting.R")
 
+map_data_path <- "../data/hrp2_scenario_maps.rds"
+
 parse_input <- function(input, output) {
+  # Parse the parameters from the input
   parameters <- list(
     prev = names(risk_categories)[strtoi(input$malaria_prevalence)],
     treat = names(risk_categories)[strtoi(input$pr_seek_treatment)],
     fitness = names(risk_categories)[strtoi(input$pr_treatment_rdt_outcome)],
-    hrp3 = names(risk_categories)[strtoi(input$hrp3_antigen)]
+    hrp3 = names(risk_categories)[strtoi(input$hrp3_antigen)],
+
+    # Placeholder value for non-malarial fever
+    nmf = "central"
   )
 
-  # TODO Replace the stub plots with the actual maps
+  # Render the maps to the output object
   output$plot_innate <- renderPlot({
-    plot_map(
-      prev = parameters$prev,
-      treat = parameters$treat,
-      fitness = parameters$fitness,
-      hrp3 = parameters$hrp3,
-      filename = "../data/hrp2_scenario_maps.rds")
-  })
+    plot_risk_map(parameters, map_data_path)
+  }, height = 500, width = 500)
+
+  output$plot_frequency <- renderPlot({
+    plot_frequency_map(parameters, map_data_path)
+  }, height = 500, width = 500)
+
+  # TODO Placeholder for the composite risk map
   output$plot_composite <- renderPlot({
-    plot_map(filename = "../data/hrp2_scenario_maps.rds")
-  })
+    plot_risk_map(parameters, map_data_path)
+  }, height = 500, width = 500)
 }
 
 # Define the server logic required for the application

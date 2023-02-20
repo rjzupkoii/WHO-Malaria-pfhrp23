@@ -3,6 +3,7 @@
 # Define the UI for the single page application
 library(magrittr)
 library(markdown)
+library(shiny)
 library(shinyBS)
 library(shinycssloaders)
 
@@ -17,7 +18,7 @@ ui <- fluidPage(
 
   # Set the main application title
   titlePanel("WHO hrp2/3 deletions projections"),
-  
+
   # Sidebar panel for inputs
   sidebarPanel(
 
@@ -52,8 +53,7 @@ ui <- fluidPage(
 
     # Reserving this space for more controls
     br(),
-    wellPanel(
-      "Controls Placeholder"
+    wellPanel("Controls Placeholder"
     )
   ),
 
@@ -61,13 +61,21 @@ ui <- fluidPage(
   mainPanel(
     tabsetPanel(
       tabPanel("Innate Rank",
-        plotOutput("plot_innate") %>% withSpinner(color = "#E5E4E2"),
+        plotOutput("plot_innate", inline = TRUE) %>% withSpinner(color = "#E5E4E2"),
+        br(),
         includeMarkdown("../UI/innate.md")
       ),
 
       tabPanel("Composite Risk",
-        plotOutput("plot_composite") %>% withSpinner(color = "#E5E4E2"),
+        plotOutput("plot_composite", inline = TRUE) %>% withSpinner(color = "#E5E4E2"),
+        br(),
         includeMarkdown("../UI/composite.md")
+      ),
+
+      tabPanel("HRP2 Frequency",
+        plotOutput("plot_frequency", inline = TRUE) %>% withSpinner(color = "#E5E4E2"),
+        br(),
+        includeMarkdown("../UI/frequency.md")
       ),
 
       tabPanel("Explainer", includeMarkdown("../UI/explainer.md"))
