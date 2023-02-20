@@ -4,18 +4,27 @@
 library(rjson)
 
 source("plotting.R")
-source("shared.R")
 
-parse_input <- function(input) {
-  parameters <- c(
-    names(choices_list)[strtoi(input$pr_seek_treatment)],
-    names(choices_list)[strtoi(input$pr_treatment_rdt_outcome)],
-    names(choices_list)[strtoi(input$malaria_prevalence)],
-    names(choices_list)[strtoi(input$hrp3_antigen)]
+parse_input <- function(input, output) {
+  parameters <- list(
+    prev = names(risk_categories)[strtoi(input$malaria_prevalence)],
+    treat = names(risk_categories)[strtoi(input$pr_seek_treatment)],
+    fitness = names(risk_categories)[strtoi(input$pr_treatment_rdt_outcome)],
+    hrp3 = names(risk_categories)[strtoi(input$hrp3_antigen)]
   )
 
-  # TODO Hand off to rendering
-  print(parameters)
+  # TODO Replace the stub plots with the actual maps
+  output$plot_innate <- renderPlot({
+    plot_map(
+      prev = parameters$prev,
+      treat = parameters$treat,
+      fitness = parameters$fitness,
+      hrp3 = parameters$hrp3,
+      filename = "../data/hrp2_scenario_maps.rds")
+  })
+  output$plot_composite <- renderPlot({
+    plot_map(filename = "../data/hrp2_scenario_maps.rds")
+  })
 }
 
 # Define the server logic required for the application
@@ -23,24 +32,16 @@ server <- function(input, output) {
 
   # The following observers all listen for changes in the form
   observeEvent(input$pr_seek_treatment, {
-    parse_input(input)
+    parse_input(input, output)
   })
   observeEvent(input$pr_treatment_rdt_outcome, {
-    parse_input(input)
+    parse_input(input, output)
   })
   observeEvent(input$malaria_prevalence, {
-    parse_input(input)
+    parse_input(input, output)
   })
   observeEvent(input$hrp3_antigen, {
-    parse_input(input)
-  })
-
-  # TODO Replace the stub plots with the actual maps
-  output$plot_innate <- renderPlot({
-    plot_map(filename="../data/hrp2_scenario_maps.rds")
-  })
-  output$plot_composite <- renderPlot({
-    plot_map(filename="../data/hrp2_scenario_maps.rds")
+    parse_input(input, output)
   })
 
 }

@@ -6,9 +6,11 @@ library(markdown)
 library(shinyBS)
 library(shinycssloaders)
 
-source("shared.R")
+# Define the choice labels that will be shared
+choices_list <- list("Optimistic" = 1, "Central" = 2, "Worst" = 3)
 
 ui <- fluidPage(
+  # Import the stylesheet
   tags$head(
     tags$link(rel = "stylesheet", type = "text/css", href = "style.css")
   ),
@@ -30,7 +32,7 @@ ui <- fluidPage(
                       choices = choices_list, selected = 1),
           helpText(includeMarkdown("../UI/treatment.md")),
           )),
-      
+
       bsCollapsePanel("Malaria Prevalence",
         wellPanel(
           selectInput("malaria_prevalence",
@@ -38,7 +40,7 @@ ui <- fluidPage(
                       choices = choices_list, selected = 3),
           helpText(includeMarkdown("../UI/prevalence.md")),
           )),
-      
+
       bsCollapsePanel("HRP3 Antigen Effects",
         wellPanel(
           selectInput("hrp3_antigen",
@@ -47,27 +49,27 @@ ui <- fluidPage(
           helpText(includeMarkdown("../UI/antigen.md")),
         ))
     ),
-    
+
     # Reserving this space for more controls
     br(),
     wellPanel(
       "Controls Placeholder"
     )
-  ), 
-  
+  ),
+
   # Main panel for displaying the maps
   mainPanel(
     tabsetPanel(
       tabPanel("Innate Rank",
-        plotOutput("plot_innate") %>% withSpinner(color = '#E5E4E2'),
+        plotOutput("plot_innate") %>% withSpinner(color = "#E5E4E2"),
         includeMarkdown("../UI/innate.md")
       ),
-      
+
       tabPanel("Composite Risk",
-        plotOutput("plot_composite") %>% withSpinner(color = '#E5E4E2'),
+        plotOutput("plot_composite") %>% withSpinner(color = "#E5E4E2"),
         includeMarkdown("../UI/composite.md")
       ),
-      
+
       tabPanel("Explainer", includeMarkdown("../UI/explainer.md"))
     )
   )
