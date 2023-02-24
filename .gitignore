@@ -2,6 +2,10 @@
 .RData
 .Rhistory
 
+# Exclude Visual Studio Code things
+.vscode
+.lintr
+
 # Exclude local reference materials
 /examples/**
 .Rproj.user
