@@ -4,20 +4,29 @@
 library(magrittr)
 library(markdown)
 library(shiny)
+library(shiny.i18n)
 library(shinyBS)
 library(shinycssloaders)
+
 
 # Define the choice labels that will be shared
 choices_list <- list("Optimistic" = 1, "Central" = 2, "Worst" = 3)
 
+# Define our translations and default language
+i18n <- Translator$new(translation_csvs_path = "../UI")
+i18n$set_translation_language("en")
+
 ui <- fluidPage(
+  # Make sure the UI can react to language changes
+  shiny.i18n::usei18n(i18n),
+
   # Import the stylesheet
   tags$head(
     tags$link(rel = "stylesheet", type = "text/css", href = "style.css")
   ),
 
   # Set the main application title
-  titlePanel("WHO hrp2/3 deletions projections"),
+  titlePanel(i18n$t("WHO hrp2/3 deletions projections")),
 
   # Sidebar panel for inputs
   sidebarPanel(
@@ -26,10 +35,10 @@ ui <- fluidPage(
       bsCollapsePanel("Treatment Coverage",
         wellPanel(
           selectInput("pr_seek_treatment",
-                      label = "Probability Seeking Treatment for Malaria Fever",
+                      label = i18n$t("Probability Seeking Treatment for Malaria Fever"),
                       choices = choices_list, selected = 2),
           selectInput("pr_treatment_rdt_outcome",
-                      label = "Probability of being treated based only on RDT outcome",
+                      label = i18n$t("Probability of being treated based only on RDT outcome"),
                       choices = choices_list, selected = 1),
           helpText(includeMarkdown("../UI/treatment.md")),
           )),
@@ -37,23 +46,27 @@ ui <- fluidPage(
       bsCollapsePanel("Malaria Prevalence",
         wellPanel(
           selectInput("malaria_prevalence",
-                      label = "Assumed malaria prevalence",
+                      label = i18n$t("Assumed malaria prevalence"),
                       choices = choices_list, selected = 3),
-          helpText(includeMarkdown("../UI/prevalence.md")),
+          helpText(uiOutput("ui_prevalence")),
           )),
 
       bsCollapsePanel("HRP3 Antigen Effects",
         wellPanel(
           selectInput("hrp3_antigen",
-                      label = "HRP3 Antigen Effects",
+                      label = i18n$t("HRP3 Antigen Effects"),
                       choices = choices_list, selected = 2),
           helpText(includeMarkdown("../UI/antigen.md")),
         ))
     ),
 
-    # Reserving this space for more controls
+    # Additional controls
     br(),
-    wellPanel("Controls Placeholder"
+    wellPanel(
+      selectInput("language",
+                  label = i18n$t("Change Language"),
+                  choices = list("English" = "en", "Français" = "fr"), 
+                  selected = i18n$get_translation_language())
     )
   ),
 
@@ -63,13 +76,13 @@ ui <- fluidPage(
       tabPanel("Innate Rank",
         plotOutput("plot_innate", inline = TRUE) %>% withSpinner(color = "#E5E4E2"),
         br(),
-        includeMarkdown("../UI/innate.md")
+        uiOutput("ui_innate")
       ),
 
       tabPanel("Composite Risk",
         plotOutput("plot_composite", inline = TRUE) %>% withSpinner(color = "#E5E4E2"),
         br(),
-        includeMarkdown("../UI/composite.md")
+        uiOutput("ui_composite")
       ),
 
       tabPanel("HRP2 Frequency",
@@ -78,7 +91,7 @@ ui <- fluidPage(
         includeMarkdown("../UI/frequency.md")
       ),
 
-      tabPanel("Explainer", includeMarkdown("../UI/explainer.md"))
+      tabPanel("Explainer", uiOutput("ui_explainer"))
     )
   )
 )

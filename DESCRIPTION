@@ -13,5 +13,6 @@ Imports:
     markdown,
     rjson,
     shiny,
+    shiny.i18n,
     shinyBS,
     shinycssloaders
