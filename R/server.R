@@ -42,10 +42,6 @@ parse_input <- function(input, output) {
 # Define the server logic required for the application
 server <- function(input, output, session) {
 
-  # Set the translation object
-  i18n <- Translator$new(translation_csvs_path = "../UI")
-  i18n$set_translation_language("en")
-
   # The following observers all listen for changes in the form
   observeEvent(input$pr_seek_treatment, {
     parse_input(input, output)
@@ -62,7 +58,6 @@ server <- function(input, output, session) {
 
   # The following observer changes the UI based on the language selected
   observeEvent(input$language, {
-    print(paste("Changing language: ", input$language))
     shiny.i18n::update_lang(input$language)
 
     # Update the various markdown texts
