@@ -20,13 +20,27 @@ ui <- fluidPage(
   # Make sure the UI can react to language changes
   shiny.i18n::usei18n(i18n),
 
-  # Import the stylesheet
+  # Add the i18n class and translation key to the bsCollapsePanel
+  HTML('<script>
+       $(document).on("shiny:sessioninitialized", function(event) {
+          $("a[id^=\'ui-collapse\']").each(function() {
+            $(this).addClass("i18n");
+            $(this).attr("data-key", $(this).text());
+          });
+       });
+       </script>'),
+
   tags$head(
-    tags$link(rel = "stylesheet", type = "text/css", href = "style.css")
+    # Import the stylesheet
+    tags$link(rel = "stylesheet", type = "text/css", href = "style.css"),
+
+    # Don't load a favicon
+    tags$link(rel = "icon", href = "data:;base64,=")
   ),
 
   # Set the main application title
-  titlePanel(i18n$t("WHO hrp2/3 deletions projections")),
+  titlePanel(i18n$t("WHO hrp2/3 deletions projections"),
+             windowTitle = "WHO hrp2/3 deletions projections"),
 
   # Sidebar panel for inputs
   sidebarPanel(
@@ -40,7 +54,7 @@ ui <- fluidPage(
           selectInput("pr_treatment_rdt_outcome",
                       label = i18n$t("Probability of being treated based only on RDT outcome"),
                       choices = choices_list, selected = 1),
-          helpText(includeMarkdown("../UI/treatment.md")),
+          helpText(uiOutput("ui_treatment")),
           )),
 
       bsCollapsePanel("Malaria Prevalence",
@@ -56,7 +70,7 @@ ui <- fluidPage(
           selectInput("hrp3_antigen",
                       label = i18n$t("HRP3 Antigen Effects"),
                       choices = choices_list, selected = 2),
-          helpText(includeMarkdown("../UI/antigen.md")),
+          helpText(uiOutput("ui_antigen")),
         ))
     ),
 
@@ -65,7 +79,7 @@ ui <- fluidPage(
     wellPanel(
       selectInput("language",
                   label = i18n$t("Change Language"),
-                  choices = list("English" = "en", "Français" = "fr"), 
+                  choices = list("English" = "en", "Français" = "fr"),
                   selected = i18n$get_translation_language())
     )
   ),
@@ -73,25 +87,25 @@ ui <- fluidPage(
   # Main panel for displaying the maps
   mainPanel(
     tabsetPanel(
-      tabPanel("Innate Rank",
+      tabPanel(i18n$t("Innate Rank"),
         plotOutput("plot_innate", inline = TRUE) %>% withSpinner(color = "#E5E4E2"),
         br(),
         uiOutput("ui_innate")
       ),
 
-      tabPanel("Composite Risk",
+      tabPanel(i18n$t("Composite Risk"),
         plotOutput("plot_composite", inline = TRUE) %>% withSpinner(color = "#E5E4E2"),
         br(),
         uiOutput("ui_composite")
       ),
 
-      tabPanel("HRP2 Frequency",
+      tabPanel(i18n$t("HRP2 Frequency"),
         plotOutput("plot_frequency", inline = TRUE) %>% withSpinner(color = "#E5E4E2"),
         br(),
-        includeMarkdown("../UI/frequency.md")
+        uiOutput("ui_frequency")
       ),
 
-      tabPanel("Explainer", uiOutput("ui_explainer"))
+      tabPanel(i18n$t("Description"), uiOutput("ui_explainer"))
     )
   )
 )

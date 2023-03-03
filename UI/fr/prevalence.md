@@ -4,7 +4,7 @@ La sélection des délétions hrp2\/3 dépend de la prévalence du paludisme. Un
 
 Nous avons modélisé trois niveaux de prévalence du paludisme pour chaque pays.
 
-**Optimiste:**
+**Optimistic:**
 
 Estimation supérieure de la prévalence du paludisme à partir du Malaria Atlas Project 2020.
 
@@ -12,6 +12,6 @@ Estimation supérieure de la prévalence du paludisme à partir du Malaria Atlas
 
 Estimation centrale de la prévalence du paludisme à partir du Malaria Atlas Project 2020.
 
-**Pire**
+**Worst**
 
 Pire estimation de la prévalence du paludisme du Malaria Atlas Project 2020.

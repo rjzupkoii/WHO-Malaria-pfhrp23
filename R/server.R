@@ -61,17 +61,26 @@ server <- function(input, output, session) {
     shiny.i18n::update_lang(input$language)
 
     # Update the various markdown texts
+    output$ui_antigen <- renderUI({
+      includeMarkdown(paste("../UI/", input$language, "/antigen.md", sep = ""))
+    })
     output$ui_composite <- renderUI({
       includeMarkdown(paste("../UI/", input$language, "/composite.md", sep = ""))
     })
     output$ui_explainer <- renderUI({
       includeMarkdown(paste("../UI/", input$language, "/explainer.md", sep = ""))
     })
+    output$ui_frequency <- renderUI({
+      includeMarkdown(paste("../UI/", input$language, "/frequency.md", sep = ""))
+    })
     output$ui_innate <- renderUI({
       includeMarkdown(paste("../UI/", input$language, "/innate.md", sep = ""))
     })
     output$ui_prevalence <- renderUI({
       includeMarkdown(paste("../UI/", input$language, "/prevalence.md", sep = ""))
+    })
+    output$ui_treatment <- renderUI({
+      includeMarkdown(paste("../UI/", input$language, "/treatment.md", sep = ""))
     })
   })
 
