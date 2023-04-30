@@ -89,6 +89,8 @@ ui <- fluidPage(
   # Main panel for displaying the maps
   mainPanel(
     tabsetPanel(
+      tabPanel(i18n$t("Description"), uiOutput("ui_explainer")),
+      
       tabPanel(i18n$t("Innate Rank"),
         plotOutput("plot_innate", inline = TRUE) %>% withSpinner(color = "#E5E4E2"),
         br(),
@@ -105,9 +107,8 @@ ui <- fluidPage(
         plotOutput("plot_frequency", inline = TRUE) %>% withSpinner(color = "#E5E4E2"),
         br(),
         uiOutput("ui_frequency")
-      ),
+      )
 
-      tabPanel(i18n$t("Description"), uiOutput("ui_explainer"))
     )
   )
 )
