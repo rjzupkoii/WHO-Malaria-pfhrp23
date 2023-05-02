@@ -1,13 +1,22 @@
 ﻿en,es
+
 WHO hrp2/3 deletions projections,Proyecciones de deleciones hrp2/3 de la OMS
-Treatment Coverage,Cobertura de tratamiento
-Probability Seeking Treatment for Malaria Fever,Probabilidad de buscar tratamiento para la fiebre de la malaria
-Probability of being treated based only on RDT outcome,Probabilidad de recibir tratamiento basada únicamente en el resultado de la PDR
+
+Treatments,Tratos
+Probability of seeking treatment for malaria fever,Probabilidad de buscar tratamiento para la fiebre palúdica
+Probability of deletions yielding a positive RDT,Probabilidad de deleciones que produzcan una RDT positiva
+Probability of adherence to RDT outcomes,Probabilidad de adherencia a los resultados de la PDR
+Probability of using microscopy for malaria diagnosis,Probabilidad de usar microscopía para el diagnóstico de malaria
+
 Malaria Prevalence,Prevalencia de malaria
-Assumed malaria prevalence,Prevalencia supuesta de paludismo
-HRP3 Antigen Effects,Efectos del antígeno HRP3
+Assumed malaria prevalence for ages 2 to 10,Prevalencia supuesta de paludismo para edades de 2 a 10 años
+
+Deletion Fitness,Aptitud de eliminación
+Assumed fitness compared to the wild type,Aptitud asumida en comparación con el tipo salvaje
+
 Change Language,Cambiar idioma
+
+Description,Descripción
 Innate Rank,Rango innato
 Composite Risk,Riesgo compuesto
 HRP2 Frequency,Frecuencia HRP2
-Description,Descripción

@@ -45,32 +45,47 @@ ui <- fluidPage(
   # Sidebar panel for inputs
   sidebarPanel(
 
-    bsCollapse(id = "side_panel", open = "Treatment Coverage",
-      bsCollapsePanel("Treatment Coverage",
+    bsCollapse(id = "side_panel", open = "Treatments",
+
+      bsCollapsePanel("Treatments",
         wellPanel(
-          selectInput("pr_seek_treatment",
-                      label = i18n$t("Probability Seeking Treatment for Malaria Fever"),
+          selectInput("treatment_seeking",
+                      label = i18n$t("Probability of seeking treatment for malaria fever"),
                       choices = choices_list, selected = 2),
-          selectInput("pr_treatment_rdt_outcome",
-                      label = i18n$t("Probability of being treated based only on RDT outcome"),
-                      choices = choices_list, selected = 1),
+          selectInput("rdt_deleted",
+                      label = i18n$t("Probability of deletions yielding a positive RDT"),
+                      choices = choices_list, selected = 2),
+          selectInput("rdt_nonadherence",
+                      label = i18n$t("Probability of adherence to RDT outcomes"),
+                      choices = choices_list, selected = 2),
+          selectInput("microscopy_usage",
+                      label = i18n$t("Probability of using microscopy for malaria diagnosis"),
+                      choices = choices_list, selected = 2),
           helpText(uiOutput("ui_treatment")),
           )),
 
       bsCollapsePanel("Malaria Prevalence",
         wellPanel(
-          selectInput("malaria_prevalence",
-                      label = i18n$t("Assumed malaria prevalence"),
-                      choices = choices_list, selected = 3),
+          selectInput("microscopy_prevalence",
+                      label = i18n$t("Assumed malaria prevalence for ages 2 to 10"),
+                      choices = choices_list, selected = 2),
           helpText(uiOutput("ui_prevalence")),
           )),
 
-      bsCollapsePanel("HRP3 Antigen Effects",
+      bsCollapsePanel("Deletion Fitness",
         wellPanel(
-          selectInput("hrp3_antigen",
-                      label = i18n$t("HRP3 Antigen Effects"),
+          selectInput("fitness",
+                      label = i18n$t("Assumed fitness compared to the wild type"),
                       choices = choices_list, selected = 2),
-          helpText(uiOutput("ui_antigen")),
+          helpText(uiOutput("ui_fitness")),
+        )),
+
+      bsCollapsePanel("Region",
+        wellPanel(
+          selectInput("region",
+            label = i18n$t("Region"),
+            choices = list("Global" = 1, "Africa" = 2, "Asia" = 3, "Latin America" = 4), 
+            selected = 2),
         ))
     ),
 
@@ -90,7 +105,7 @@ ui <- fluidPage(
   mainPanel(
     tabsetPanel(
       tabPanel(i18n$t("Description"), uiOutput("ui_explainer")),
-      
+
       tabPanel(i18n$t("Innate Rank"),
         plotOutput("plot_innate", inline = TRUE) %>% withSpinner(color = "#E5E4E2"),
         br(),

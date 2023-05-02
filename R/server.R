@@ -8,20 +8,24 @@ library(shiny.i18n)
 source("plotting.R")
 
 # Define the path to the map data
-map_data_path <- "../data/hrp2_scenario_maps.rds"
+map_data_path <- "../data/R6_map.rds"
 
 
 # Function to parse the user inputs and produce the visual maps
 parse_input <- function(input, output) {
+
   # Parse the parameters from the input
   parameters <- list(
-    prev = names(risk_categories)[strtoi(input$malaria_prevalence)],
-    treat = names(risk_categories)[strtoi(input$pr_seek_treatment)],
-    fitness = names(risk_categories)[strtoi(input$pr_treatment_rdt_outcome)],
-    hrp3 = names(risk_categories)[strtoi(input$hrp3_antigen)],
+    # Note the region to render
+    region = names(risk_regions)[strtoi(input$region)],
 
-    # Placeholder value for non-malarial fever
-    nmf = "central"
+    # Note the other settings from the UI
+    treatment_seeking = names(risk_categories)[strtoi(input$treatment_seeking)],
+    rdt_deleted = names(risk_categories)[strtoi(input$rdt_deleted)],
+    rdt_nonadherence = names(risk_categories)[strtoi(input$rdt_nonadherence)],
+    microscopy_usage = names(risk_categories)[strtoi(input$microscopy_usage)],
+    microscopy_prevalence = names(risk_categories)[strtoi(input$microscopy_prevalence)],
+    fitness = names(risk_categories)[strtoi(input$fitness)]
   )
 
   # Render the maps to the output object
@@ -43,16 +47,25 @@ parse_input <- function(input, output) {
 server <- function(input, output, session) {
 
   # The following observers all listen for changes in the form
-  observeEvent(input$pr_seek_treatment, {
+  observeEvent(input$treatment_seeking, {
     parse_input(input, output)
   })
-  observeEvent(input$pr_treatment_rdt_outcome, {
+  observeEvent(input$rdt_deleted, {
     parse_input(input, output)
   })
-  observeEvent(input$malaria_prevalence, {
+  observeEvent(input$rdt_nonadherence, {
     parse_input(input, output)
   })
-  observeEvent(input$hrp3_antigen, {
+  observeEvent(input$microscopy_usage, {
+    parse_input(input, output)
+  })
+  observeEvent(input$microscopy_prevalence, {
+    parse_input(input, output)
+  })
+  observeEvent(input$fitness, {
+    parse_input(input, output)
+  })
+  observeEvent(input$region, {
     parse_input(input, output)
   })
 
