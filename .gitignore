@@ -12,3 +12,5 @@
 
 # Exclude any temporary directories
 **/temp/**
+utility/data/**
+utility/out/**
