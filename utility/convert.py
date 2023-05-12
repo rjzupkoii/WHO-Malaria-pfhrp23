@@ -3,20 +3,19 @@
 # convert.py
 #
 # This script processes the R data from R6_map.rds to generate a single file 
-# for plotting. For this script to work we assume that the data has already 
-# been extracted into a CSV file and some light processing - changing text
-# enumerations to numeric - has already occurred. 
+# for plotting. 
 #
 # Order of operations is clean_results, then map_iso; map_regions is provided 
 # to generate a JSON file based upon the country-region mapping as extracted
 # from the R6_map.rds file.
+import urllib.request
 import json
 import os
 import pandas as pd
 
 
-def clean_results():
-    data = pd.read_csv('data/numeric_results.csv')
+def clean_results(filename):
+    data = pd.read_csv(filename)
 
     # Delete the row index column
     del data[data.columns[0]]
@@ -27,14 +26,22 @@ def clean_results():
     # Rename the PfPR 2-10 column the correct name
     data = data.rename(columns={'Micro.2.10.1': 'Micro.2.10'})
 
+    # Replace the text values with numeric ones
+    for column in ['Micro.2.10', 'ft', 'microscopy.use', 'rdt.nonadherence', 'fitness', 'rdt.det']:
+        for value, label in enumerate(['best', 'central', 'worst']):
+            data.loc[data[column] == label, column] = value + 1
+    for column in ['hrp2_risk', 'hrp2_composite_risk']:
+        for value, label in enumerate(['High', 'Moderate', 'Slight', 'Marginal']):
+            data.loc[data[column] == label, column] = value + 1
+
     # Save the file to our working directory
-    os.makedirs('out', exist_ok=True)
-    data.to_csv('out/clean.csv', index=False)
+    data.to_csv('temp/clean.csv', index=False)
+    return 'temp/clean.csv'
 
 
-def map_iso():
-    numeric = pd.read_csv('out/clean.csv')
-    mapping = pd.read_csv('data/mapping.csv')
+def map_iso(clean_filename, mapping_filename):
+    numeric = pd.read_csv(clean_filename)
+    mapping = pd.read_csv(mapping_filename)
     iso_codes = pd.read_csv('../data/country_iso_code.csv')
 
     # Add our ISO file
@@ -55,12 +62,12 @@ def map_iso():
     del numeric[numeric.columns[1]]
 
     # Save the data to our working directory
-    os.makedirs('out', exist_ok=True)
     numeric.to_csv('out/coded.csv', index=False)
+    return 'out/coded.csv'
 
 
-def map_regions():
-    data = pd.read_csv('data/mapping.csv')
+def map_regions(filename):
+    data = pd.read_csv(filename)
 
     # Note the unique regions
     mapping = {}
@@ -73,9 +80,29 @@ def map_regions():
             mapping[row.region].append(row.iso)
 
     # Save as JSON
-    os.makedirs('out', exist_ok=True)
     with open('out/mapping.json', 'w') as out:
         json.dump(mapping, out)
 
 
-map_iso()
+def main(refresh=False):
+    # Make our temp and output directories
+    os.makedirs('temp', exist_ok=True)
+    os.makedirs('out', exist_ok=True)
+
+    # Download the latest version if requested
+    filename = 'temp/full_results.csv'
+    if refresh:
+        print('Downloading data file...')
+        urllib.request.urlretrieve('https://media.githubusercontent.com/media/OJWatson/hrpup/main/analysis/tables/full_results.csv', filename)
+        print('done!')
+
+    # Run through the processing workflow
+    print('Processing data file...')
+    map_regions('data/mapping.csv')
+    clean = clean_results(filename)
+    coded = map_iso(clean, 'data/mapping.csv')
+    print('Cleaned and mapped results saved as: ', coded)
+
+
+if __name__ == '__main__':
+    main(True)
