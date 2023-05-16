@@ -10,9 +10,6 @@
 /examples/**
 .Rproj.user
 
-# Exclude large data files
-**/R6_map.rds
-
 # Exclude any temporary directories
 **/temp/**
 utility/data/**
