@@ -68,6 +68,7 @@ def map_iso(clean_filename, mapping_filename):
 
 def map_regions(filename):
     data = pd.read_csv(filename)
+    iso_codes = pd.read_csv('../data/country_iso_code.csv')
 
     # Note the unique regions
     mapping = {}
@@ -76,12 +77,24 @@ def map_regions(filename):
 
     # Map the country ISO codes to the regions
     for _, row in data.iterrows():
-        if row.iso not in mapping[row.region]:
-            mapping[row.region].append(row.iso)
+        iso3 = iso_codes[iso_codes['iso3'] == row.iso].numeric.item()
+        if iso3 not in mapping[row.region]:
+            mapping[row.region].append(iso3)
 
-    # Save as JSON
-    with open('out/mapping.json', 'w') as out:
-        json.dump(mapping, out)
+    # # Save as JSON
+    # with open('out/mapping.json', 'w') as out:
+    #     json.dump(mapping, out)
+    # return 'out/mapping.json'
+    # Save as YAML
+    with open('out/mapping.yml', 'w') as out:
+        ndx = 0
+        for key in mapping:
+            out.write('{}:\n'.format(ndx))
+            out.write('  region: {}\n'.format(key))
+            values = ', '.join(map(str, mapping[key]))
+            out.write('  iso3n: [{}]\n'.format(values))
+            ndx += 1
+    return 'out/mapping.yml'
 
 
 def main(refresh=False):
@@ -96,13 +109,18 @@ def main(refresh=False):
         urllib.request.urlretrieve('https://media.githubusercontent.com/media/OJWatson/hrpup/main/analysis/tables/full_results.csv', filename)
         print('done!')
 
-    # Run through the processing workflow
-    print('Processing data file...')
-    map_regions('data/mapping.csv')
-    clean = clean_results(filename)
-    coded = map_iso(clean, 'data/mapping.csv')
-    print('Cleaned and mapped results saved as: ', coded)
-
+    # Map the regions
+    if not os.path.isfile('out/mapping.json'):
+        print('Mapping regions...')
+        mapping = map_regions('data/mapping.csv')
+        print('Mapped data saved as: ', mapping)
+    
+    # Prepare the coded data file
+    if not os.path.isfile('out/coded.csv'):
+        print('Processing data file...')
+        clean = clean_results(filename)
+        coded = map_iso(clean, 'data/mapping.csv')
+        print('Cleaned and mapped results saved as: ', coded)
 
 if __name__ == '__main__':
-    main(True)
+    main(False)
