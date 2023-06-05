@@ -7,46 +7,54 @@ library(magrittr)
 library(ggplot2)
 
 # Path to the data when running in an environment like RStudio
-r_data_path <- "data/hrp2_scenario_maps.rds"
+r_data_path <- "data/data.RData"
 
-risk_categories <- list("best" = 1, "central" = 2, "worst" = 3)
 risk_labels  <- c("High", "Moderate", "Slight", "Marginal", "No Data")
 risk_palette <- c("#882255", "#DDCC77", "#88CCEE", "#44AA99", "#E5E4E2")
 
 # Load the data and return the filtered map data
-load <- function(parameters, filename) {
+prepare <- function(parameters, filename) {
+  # Load the data
+  load(filename)  
 
-  # Read the data
-  scenario_maps <- readRDS(filename)
-
-  # Filter by the requested parameters
-  ind <- which(scenario_maps$scenarios$prev == parameters$prev &
-                 scenario_maps$scenarios$treat == parameters$treat &
-                 scenario_maps$scenarios$fitness == parameters$fitness &
-                 scenario_maps$scenarios$hrp3 == parameters$hrp3 &
-                 scenario_maps$scenarios$nmf == parameters$nmf)
-
-  # Update the data in the object with the correct scenario data
-  map <- scenario_maps$map
-  map$hrp2_risk <- scenario_maps$map_data[[ind]]$hrp2_risk
-  map$hrp2_freq <- scenario_maps$map_data[[ind]]$hrp2_freq  
-  return(map)
+  # Filter the results based upon the parameters provided
+  indicies <- which(dataset$Micro.2.10 == parameters$microscopy_prevalence &
+                      dataset$ft == parameters$treatment_seeking &
+                      dataset$microscopy.use == parameters$microscopy_usage &
+                      dataset$rdt.det == parameters$rdt_deleted &
+                      dataset$rdt.nonadherence == parameters$rdt_nonadherence &
+                      dataset$fitness == parameters$fitness)
+  results <- subset(dataset, row.names(dataset) %in% indicies)
+  
+  # Filter the results based upon the region selected
+  if (parameters$region != "Global") {
+    region <- regions[[which(regions$names == parameters$region)]]
+    results <- subset(results, results$iso %in% region$iso3n)
+  }
+  
+  # Prepare the geometry to be rendered
+  geometry <- merge(x = countries, y = results, by.x = "ISO_N3", by.y = "iso")
+  return(geometry)
 }
 
 # Produce the HRP2 risk map
 plot_risk_map <- function(parameters, filename = r_data_path) {
-  map <- load(parameters, filename)
+  map <- prepare(parameters, filename)
   map %>% ggplot() +
     geom_sf(aes(fill = factor(hrp2_risk))) +
     scale_fill_manual(values = risk_palette, labels = risk_labels, name = "HRP2 risk") +
-    theme_void()
+    theme_void() +
+    theme(legend.position = "bottom",
+          plot.margin=grid::unit(c(0,0,0,0), "mm"))
 }
 
-# Produce the HRP2 frequency map
-plot_frequency_map <- function(parameters, filename = r_data_path) {
-  map <- load(parameters, filename)
+# Produce the HRP2 composite risk map
+plot_composite_map <- function(parameters, filename = r_data_path) {
+  map <- prepare(parameters, filename)
   map %>% ggplot() +
-    geom_sf(aes(fill = hrp2_freq)) +
-    scale_fill_distiller(palette = "Spectral", name = "HRP2 frequency") +
-    theme_void()
+    geom_sf(aes(fill = factor(hrp2_composite_risk))) +
+    scale_fill_manual(values = risk_palette, labels = risk_labels, name = "HRP2 Composite Risk") +
+    theme_void() +
+    theme(legend.position = "bottom",
+          plot.margin=grid::unit(c(0,0,0,0), "mm"))
 }

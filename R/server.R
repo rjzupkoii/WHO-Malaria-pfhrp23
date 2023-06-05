@@ -8,39 +8,38 @@ library(shiny.i18n)
 source("plotting.R")
 
 # Define the path to the map data
-map_data_path <- "../data/R6_map.rds"
-
+map_data_path <- "../data/data.RData"
 
 # Function to parse the user inputs and produce the visual maps
 parse_input <- function(input, output) {
-
+  regions_mapping <- list("Global" = 1, "Africa" = 2, "Asia" = 3, "Latin America and the Caribbean" = 4)
+  
   # Parse the parameters from the input
   parameters <- list(
     # Note the region to render
-    region = names(risk_regions)[strtoi(input$region)],
+    region = names(regions_mapping)[strtoi(input$region)],
 
     # Note the other settings from the UI
-    treatment_seeking = names(risk_categories)[strtoi(input$treatment_seeking)],
-    rdt_deleted = names(risk_categories)[strtoi(input$rdt_deleted)],
-    rdt_nonadherence = names(risk_categories)[strtoi(input$rdt_nonadherence)],
-    microscopy_usage = names(risk_categories)[strtoi(input$microscopy_usage)],
-    microscopy_prevalence = names(risk_categories)[strtoi(input$microscopy_prevalence)],
-    fitness = names(risk_categories)[strtoi(input$fitness)]
+    treatment_seeking = strtoi(input$treatment_seeking),
+    rdt_deleted = strtoi(input$rdt_deleted),
+    rdt_nonadherence = strtoi(input$rdt_nonadherence),
+    microscopy_usage = strtoi(input$microscopy_usage),
+    microscopy_prevalence = strtoi(input$microscopy_prevalence),
+    fitness = strtoi(input$fitness)
   )
 
   # Render the maps to the output object
   output$plot_innate <- renderPlot({
     plot_risk_map(parameters, map_data_path)
-  }, height = 500, width = 500)
-
-  output$plot_frequency <- renderPlot({
-    plot_frequency_map(parameters, map_data_path)
-  }, height = 500, width = 500)
-
-  # TODO Placeholder for the composite risk map
+  }, height = 0.7 * as.numeric(input$dimension[2]),
+     width = 0.6 * as.numeric(input$dimension[1])
+  )
+  
   output$plot_composite <- renderPlot({
-    plot_risk_map(parameters, map_data_path)
-  }, height = 500, width = 500)
+    plot_composite_map(parameters, map_data_path)
+  }, height = 0.7 * as.numeric(input$dimension[2]),
+     width = 0.6 * as.numeric(input$dimension[1])
+  )
 }
 
 # Define the server logic required for the application
@@ -66,6 +65,9 @@ server <- function(input, output, session) {
     parse_input(input, output)
   })
   observeEvent(input$region, {
+    parse_input(input, output)
+  })
+  observeEvent(input$dimension, {
     parse_input(input, output)
   })
 

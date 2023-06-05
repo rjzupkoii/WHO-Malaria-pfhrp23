@@ -35,7 +35,21 @@ ui <- fluidPage(
     tags$link(rel = "stylesheet", type = "text/css", href = "style.css"),
 
     # Don't load a favicon
-    tags$link(rel = "icon", href = "data:;base64,=")
+    tags$link(rel = "icon", href = "data:;base64,="),
+    
+    # Track the size of the form so we can adjust the plots
+    tags$script('
+      var dimension = [0, 0];
+      $(document).on("shiny:connected", function(e) {
+        dimension[0] = window.innerWidth;
+        dimension[1] = window.innerHeight;
+        Shiny.onInputChange("dimension", dimension);
+      });
+      $(window).resize(function(e) {
+        dimension[0] = window.innerWidth;
+        dimension[1] = window.innerHeight;
+        Shiny.onInputChange("dimension", dimension);
+      });')
   ),
 
   # Set the main application title
@@ -107,22 +121,16 @@ ui <- fluidPage(
       tabPanel(i18n$t("Description"), uiOutput("ui_explainer")),
 
       tabPanel(i18n$t("Innate Rank"),
-        plotOutput("plot_innate", inline = TRUE) %>% withSpinner(color = "#E5E4E2"),
+        plotOutput("plot_innate", width = "100%", inline = TRUE) %>% withSpinner(color = "#E5E4E2"),
         br(),
         uiOutput("ui_innate")
       ),
 
       tabPanel(i18n$t("Composite Risk"),
-        plotOutput("plot_composite", inline = TRUE) %>% withSpinner(color = "#E5E4E2"),
+        plotOutput("plot_composite", width = "100%", inline = TRUE) %>% withSpinner(color = "#E5E4E2"),
         br(),
         uiOutput("ui_composite")
       ),
-
-      tabPanel(i18n$t("HRP2 Frequency"),
-        plotOutput("plot_frequency", inline = TRUE) %>% withSpinner(color = "#E5E4E2"),
-        br(),
-        uiOutput("ui_frequency")
-      )
 
     )
   )

@@ -2,7 +2,7 @@
 # 
 # This is a development time script that is intended to take the output from 
 # covert.py and prepare the data.RData file that will be used by the R Shiny app
-
+library(dplyr)
 library(reshape2)
 library(rlist)
 library(sf)
@@ -20,6 +20,7 @@ rm(connection)
 
 # Load in the larger data set
 dataset <- read.csv('utility/out/coded.csv')
+dataset <- distinct(dataset)
 
 # Load in the Natural Earth shapefile
 unzip('data/ne_50m_admin_0_countries.zip', exdir = 'temp')
