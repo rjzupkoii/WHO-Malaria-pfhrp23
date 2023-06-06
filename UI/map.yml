@@ -1,0 +1,12 @@
+en:
+  labels: ["High", "Moderate", "Slight", "Marginal", "No Data"]
+  risk_map: "Innate Risk"
+  composite_map: "Composite Risk"
+fr:
+  labels: ["Haut", "Modéré", "Faible", "Marginal", "Pas de données"]
+  risk_map: "Rang inné"
+  composite_map: "Risque composé"
+es:
+  labels: ["Alto", "Moderar", "Pequeño", "Marginal", "Sin datos"]
+  risk_map: "Rango innato"
+  composite_map: "Riesgo compuesto"

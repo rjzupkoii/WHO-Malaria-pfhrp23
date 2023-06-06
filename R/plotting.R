@@ -6,16 +6,12 @@
 library(magrittr)
 library(ggplot2)
 
-# Path to the data when running in an environment like RStudio
-r_data_path <- "data/data.RData"
-
-risk_labels  <- c("High", "Moderate", "Slight", "Marginal", "No Data")
 risk_palette <- c("#882255", "#DDCC77", "#88CCEE", "#44AA99", "#E5E4E2")
 
 # Load the data and return the filtered map data
 prepare <- function(parameters, filename) {
   # Load the data
-  load(filename)  
+  load(filename)
 
   # Filter the results based upon the parameters provided
   indicies <- which(dataset$Micro.2.10 == parameters$microscopy_prevalence &
@@ -38,22 +34,32 @@ prepare <- function(parameters, filename) {
 }
 
 # Produce the HRP2 risk map
-plot_risk_map <- function(parameters, filename = r_data_path) {
-  map <- prepare(parameters, filename)
+plot_risk_map <- function(parameters, data_file, language_file) {
+  # Load the data
+  map <- prepare(parameters, data_file)
+  labels <- read_yaml(file(language_file))
+  
+  # Render the plot
   map %>% ggplot() +
     geom_sf(aes(fill = factor(hrp2_risk))) +
-    scale_fill_manual(values = risk_palette, labels = risk_labels, name = "HRP2 risk") +
+    scale_fill_manual(values = risk_palette, 
+                      labels = labels[[parameters$language]]$labels, 
+                      name = labels[[parameters$language]]$risk_map) +
     theme_void() +
     theme(legend.position = "bottom",
           plot.margin=grid::unit(c(0,0,0,0), "mm"))
 }
 
 # Produce the HRP2 composite risk map
-plot_composite_map <- function(parameters, filename = r_data_path) {
-  map <- prepare(parameters, filename)
+plot_composite_map <- function(parameters, data_file, language_file) {
+  map <- prepare(parameters, data_file)
+  labels <- read_yaml(file(language_file))
+  
   map %>% ggplot() +
     geom_sf(aes(fill = factor(hrp2_composite_risk))) +
-    scale_fill_manual(values = risk_palette, labels = risk_labels, name = "HRP2 Composite Risk") +
+    scale_fill_manual(values = risk_palette, 
+                      labels = labels[[parameters$language]]$labels, 
+                      name = labels[[parameters$language]]$composite_map) +
     theme_void() +
     theme(legend.position = "bottom",
           plot.margin=grid::unit(c(0,0,0,0), "mm"))

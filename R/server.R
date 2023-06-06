@@ -8,14 +8,18 @@ library(shiny.i18n)
 source("plotting.R")
 
 # Define the path to the map data
-map_data_path <- "../data/data.RData"
+data_file <- "../data/data.RData"
+labels_file <- "../UI/map.yml"
 
 # Function to parse the user inputs and produce the visual maps
 parse_input <- function(input, output) {
   regions_mapping <- list("Global" = 1, "Africa" = 2, "Asia" = 3, "Latin America and the Caribbean" = 4)
-  
+
   # Parse the parameters from the input
   parameters <- list(
+    # Note the language to render in
+    language = input$language,
+    
     # Note the region to render
     region = names(regions_mapping)[strtoi(input$region)],
 
@@ -30,13 +34,13 @@ parse_input <- function(input, output) {
 
   # Render the maps to the output object
   output$plot_innate <- renderPlot({
-    plot_risk_map(parameters, map_data_path)
+    plot_risk_map(parameters, data_file, labels_file)
   }, height = 0.7 * as.numeric(input$dimension[2]),
      width = 0.6 * as.numeric(input$dimension[1])
   )
   
   output$plot_composite <- renderPlot({
-    plot_composite_map(parameters, map_data_path)
+    plot_composite_map(parameters, data_file, labels_file)
   }, height = 0.7 * as.numeric(input$dimension[2]),
      width = 0.6 * as.numeric(input$dimension[1])
   )
@@ -97,6 +101,9 @@ server <- function(input, output, session) {
     output$ui_treatment <- renderUI({
       includeMarkdown(paste("../UI/", input$language, "/treatment.md", sep = ""))
     })
+    
+    # Regenerate the map
+    parse_input(input, output)
   })
 
 }
