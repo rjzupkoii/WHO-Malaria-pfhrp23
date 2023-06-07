@@ -12,7 +12,9 @@ Imports:
     magrittr,
     markdown,
     rjson,
+    sf,
     shiny,
     shiny.i18n,
     shinyBS,
-    shinycssloaders
+    shinycssloaders,
+    yaml

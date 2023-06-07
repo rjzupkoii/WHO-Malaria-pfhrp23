@@ -3,8 +3,10 @@
 # This file contains all of the logic associated with the generation of plots.
 # We assume that the caller (i.e., server.R) will handle all of the processing
 # that is specific to the web environment.
-library(magrittr)
 library(ggplot2)
+library(magrittr)
+library(sf)
+library(yaml)
 
 risk_palette <- c("#882255", "#DDCC77", "#88CCEE", "#44AA99", "#E5E4E2")
 
