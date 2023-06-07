@@ -4,12 +4,13 @@
 library(rjson)
 library(shiny)
 library(shiny.i18n)
+library(yaml)
 
 source("plotting.R")
 
 # Define the path to the map data
 data_file <- "../data/data.RData"
-labels_file <- "../UI/map.yml"
+translations_file <- "../UI/translation.yml"
 
 # Function to parse the user inputs and produce the visual maps
 parse_input <- function(input, output) {
@@ -34,13 +35,13 @@ parse_input <- function(input, output) {
 
   # Render the maps to the output object
   output$plot_innate <- renderPlot({
-    plot_risk_map(parameters, data_file, labels_file)
+    plot_risk_map(parameters, data_file, translations_file)
   }, height = 0.7 * as.numeric(input$dimension[2]),
      width = 0.6 * as.numeric(input$dimension[1])
   )
   
   output$plot_composite <- renderPlot({
-    plot_composite_map(parameters, data_file, labels_file)
+    plot_composite_map(parameters, data_file, translations_file)
   }, height = 0.7 * as.numeric(input$dimension[2]),
      width = 0.6 * as.numeric(input$dimension[1])
   )
@@ -79,6 +80,28 @@ server <- function(input, output, session) {
   observeEvent(input$language, {
     shiny.i18n::update_lang(input$language)
 
+    # Read our YAML translations
+    translations <- read_yaml(file(translations_file))
+
+    # Update the various select inputs for the drop down choices
+    choices_translated <- list()
+    for (ndx in 1:3) {
+      choices_translated[[translations[[input$language]]$choices[[ndx]]]] <- ndx
+    }
+    updateSelectInput(session, "treatment_seeking", choices = choices_translated, selected = input$treatment_seeking)
+    updateSelectInput(session, "rdt_deleted", choices = choices_translated, selected = input$treatment_seeking)
+    updateSelectInput(session, "rdt_nonadherence", choices = choices_translated, selected = input$treatment_seeking)
+    updateSelectInput(session, "microscopy_usage", choices = choices_translated, selected = input$treatment_seeking)
+    updateSelectInput(session, "microscopy_prevalence", choices = choices_translated, selected = input$treatment_seeking)
+    updateSelectInput(session, "fitness", choices = choices_translated, selected = input$treatment_seeking)
+    
+    # Update the region selection drop down choices
+    regions_translated <- list()
+    for (ndx in 1:4) {
+      regions_translated[[translations[[input$language]]$regions[[ndx]]]] <- ndx
+    }
+    updateSelectInput(session, "region", choices = regions_translated, selected = input$region)
+    
     # Update the various markdown texts
     output$ui_antigen <- renderUI({
       includeMarkdown(paste("../UI/", input$language, "/antigen.md", sep = ""))
