@@ -14,7 +14,7 @@ library(shinycssloaders)
 choices_list_en <- list("Optimistic" = 1, "Central" = 2, "Worst" = 3)
 
 # Define our translations and default language
-i18n <- Translator$new(translation_csvs_path = "../UI")
+i18n <- Translator$new(translation_csvs_path = "lang", translation_csv_config = "lang/config.yml")
 i18n$set_translation_language("en")
 
 ui <- fluidPage(

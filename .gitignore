@@ -1,6 +1,7 @@
 # Exclude RStudio things
 .RData
 .Rhistory
+**/rsconnect/**
 
 # Exclude Visual Studio Code things
 .vscode

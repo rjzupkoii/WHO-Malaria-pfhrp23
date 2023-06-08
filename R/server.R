@@ -9,8 +9,8 @@ library(yaml)
 source("plotting.R")
 
 # Define the path to the map data
-data_file <- "../data/data.RData"
-translations_file <- "../UI/translation.yml"
+data_file <- "data/data.RData"
+translations_file <- "lang/translation.yml"
 
 # Function to parse the user inputs and produce the visual maps
 parse_input <- function(input, output) {
@@ -104,25 +104,25 @@ server <- function(input, output, session) {
     
     # Update the various markdown texts
     output$ui_antigen <- renderUI({
-      includeMarkdown(paste("../UI/", input$language, "/antigen.md", sep = ""))
+      includeMarkdown(paste("lang/", input$language, "/antigen.md", sep = ""))
     })
     output$ui_composite <- renderUI({
-      includeMarkdown(paste("../UI/", input$language, "/composite.md", sep = ""))
+      includeMarkdown(paste("lang/", input$language, "/composite.md", sep = ""))
     })
     output$ui_explainer <- renderUI({
-      includeMarkdown(paste("../UI/", input$language, "/explainer.md", sep = ""))
+      includeMarkdown(paste("lang/", input$language, "/explainer.md", sep = ""))
     })
     output$ui_frequency <- renderUI({
-      includeMarkdown(paste("../UI/", input$language, "/frequency.md", sep = ""))
+      includeMarkdown(paste("lang/", input$language, "/frequency.md", sep = ""))
     })
     output$ui_innate <- renderUI({
-      includeMarkdown(paste("../UI/", input$language, "/innate.md", sep = ""))
+      includeMarkdown(paste("lang/", input$language, "/innate.md", sep = ""))
     })
     output$ui_prevalence <- renderUI({
-      includeMarkdown(paste("../UI/", input$language, "/prevalence.md", sep = ""))
+      includeMarkdown(paste("lang/", input$language, "/prevalence.md", sep = ""))
     })
     output$ui_treatment <- renderUI({
-      includeMarkdown(paste("../UI/", input$language, "/treatment.md", sep = ""))
+      includeMarkdown(paste("lang/", input$language, "/treatment.md", sep = ""))
     })
     
     # Regenerate the map
