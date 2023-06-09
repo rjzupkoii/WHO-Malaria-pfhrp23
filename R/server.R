@@ -20,7 +20,7 @@ parse_input <- function(input, output) {
   parameters <- list(
     # Note the language to render in
     language = input$language,
-    
+
     # Note the region to render
     region = names(regions_mapping)[strtoi(input$region)],
 
@@ -39,7 +39,7 @@ parse_input <- function(input, output) {
   }, height = 0.7 * as.numeric(input$dimension[2]),
      width = 0.6 * as.numeric(input$dimension[1])
   )
-  
+
   output$plot_composite <- renderPlot({
     plot_composite_map(parameters, data_file, translations_file)
   }, height = 0.7 * as.numeric(input$dimension[2]),
@@ -94,14 +94,14 @@ server <- function(input, output, session) {
     updateSelectInput(session, "microscopy_usage", choices = choices_translated, selected = input$treatment_seeking)
     updateSelectInput(session, "microscopy_prevalence", choices = choices_translated, selected = input$treatment_seeking)
     updateSelectInput(session, "fitness", choices = choices_translated, selected = input$treatment_seeking)
-    
+
     # Update the region selection drop down choices
     regions_translated <- list()
     for (ndx in 1:4) {
       regions_translated[[translations[[input$language]]$regions[[ndx]]]] <- ndx
     }
     updateSelectInput(session, "region", choices = regions_translated, selected = input$region)
-    
+
     # Update the various markdown texts
     output$ui_antigen <- renderUI({
       includeMarkdown(paste("lang/", input$language, "/antigen.md", sep = ""))
@@ -124,7 +124,7 @@ server <- function(input, output, session) {
     output$ui_treatment <- renderUI({
       includeMarkdown(paste("lang/", input$language, "/treatment.md", sep = ""))
     })
-    
+
     # Regenerate the map
     parse_input(input, output)
   })

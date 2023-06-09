@@ -16,20 +16,20 @@ prepare <- function(parameters, filename) {
   load(filename)
 
   # Filter the results based upon the parameters provided
-  indicies <- which(dataset$Micro.2.10 == parameters$microscopy_prevalence &
+  indices <- which(dataset$Micro.2.10 == parameters$microscopy_prevalence &
                       dataset$ft == parameters$treatment_seeking &
                       dataset$microscopy.use == parameters$microscopy_usage &
                       dataset$rdt.det == parameters$rdt_deleted &
                       dataset$rdt.nonadherence == parameters$rdt_nonadherence &
                       dataset$fitness == parameters$fitness)
-  results <- subset(dataset, row.names(dataset) %in% indicies)
-  
+  results <- subset(dataset, row.names(dataset) %in% indices)
+
   # Filter the results based upon the region selected
   if (parameters$region != "Global") {
     region <- regions[[which(regions$names == parameters$region)]]
     results <- subset(results, results$iso %in% region$iso3n)
   }
-  
+
   # Prepare the geometry to be rendered
   geometry <- merge(x = countries, y = results, by.x = "ISO_N3", by.y = "iso")
   return(geometry)
@@ -40,7 +40,7 @@ plot_risk_map <- function(parameters, data_file, language_file) {
   # Load the data
   map <- prepare(parameters, data_file)
   labels <- read_yaml(file(language_file))
-  
+
   # Render the plot
   map %>% ggplot() +
     geom_sf(aes(fill = factor(hrp2_risk))) +
@@ -56,7 +56,7 @@ plot_risk_map <- function(parameters, data_file, language_file) {
 plot_composite_map <- function(parameters, data_file, language_file) {
   map <- prepare(parameters, data_file)
   labels <- read_yaml(file(language_file))
-  
+
   map %>% ggplot() +
     geom_sf(aes(fill = factor(hrp2_composite_risk))) +
     scale_fill_manual(values = risk_palette, 
