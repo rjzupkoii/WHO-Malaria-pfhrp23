@@ -4,7 +4,7 @@
 
 Rapid diagnostic tests (RDTs) are one component of *Plasmodium falciplarim* malaria case management in many parts of the world; however, deletion of histidine-rich protein genes *pfhrp2/3* can result in false-negative RDT results in tests based upon detection of the histidine-rich protein 2 (HRP2) and its paralog histidine-rich protein 3 (HRP3). Projecting the spread of *pfhrp2/3* deletions may allow local policymakers and international support agencies to plan for the possibility of increased false-negative RDT results.
 
-This repository contains some of the computational work that was done in support of the pre-print "Global risk of selection and spread of *Plasmodium falciparum* histidine-rich protein 2 and 3 gene deletions" by Watson et al. as well as the "hrp2/3 Deletion Risk Explorer" app that allows users to explore how changes in model assumptions impact *pfhrp2/3* deletion risk at a national level.
+This repository contains some of the computational work that was done in support of the pre-print "Global risk of selection and spread of *Plasmodium falciparum* histidine-rich protein 2 and 3 gene deletions" by Watson et al. as well as the "HRP2/3 Deletion Risk Explorer" app that allows users to explore how changes in model assumptions impact *pfhrp2/3* deletion risk at a national level.
 
 ## Repository Organization
 
@@ -15,9 +15,9 @@ This repository contains some of the computational work that was done in support
 `utility/` contains various scripts used to processing the model data from [hrpup](https://github.com/OJWatson/hrpup) for the Deletion Risk Explorer.
 
 
-# hrp2/3 Deletion Risk Explorer
+# HRP2/3 Deletion Risk Explorer
 
-The hrp2/3 Deletion Risk Explorer is an R [Shiny](https://www.rstudio.com/products/shiny/) web application that can be accessed at URL, run locally in [RStudio Desktop](https://posit.co/download/rstudio-desktop/), or deployed to a web host such as [shinyapps.io](https://www.shinyapps.io/). 
+The HRP2/3 Deletion Risk Explorer is an R [Shiny](https://www.rstudio.com/products/shiny/) web application that can be accessed at URL, run locally in [RStudio Desktop](https://posit.co/download/rstudio-desktop/), or deployed to a web host such as [shinyapps.io](https://www.shinyapps.io/). 
 
 ## Running in RStudio
 
