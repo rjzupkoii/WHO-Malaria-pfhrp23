@@ -121,7 +121,7 @@ ui <- fluidPage(
     tabsetPanel(
       tabPanel(i18n$t("Description"), uiOutput("ui_explainer")),
 
-      tabPanel(i18n$t("Innate Rank"),
+      tabPanel(i18n$t("Innate Risk"),
         plotOutput("plot_innate", width = "100%", inline = TRUE) %>% withSpinner(color = "#E5E4E2"),
         br(),
         uiOutput("ui_innate")
