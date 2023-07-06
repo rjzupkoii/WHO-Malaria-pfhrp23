@@ -103,9 +103,6 @@ server <- function(input, output, session) {
     updateSelectInput(session, "region", choices = regions_translated, selected = input$region)
 
     # Update the various markdown texts
-    output$ui_antigen <- renderUI({
-      includeMarkdown(paste("lang/", input$language, "/antigen.md", sep = ""))
-    })
     output$ui_composite <- renderUI({
       includeMarkdown(paste("lang/", input$language, "/composite.md", sep = ""))
     })
@@ -114,9 +111,6 @@ server <- function(input, output, session) {
     })
     output$ui_fitness <- renderUI({
       includeMarkdown(paste("lang/", input$language, "/fitness.md", sep = ""))
-    })
-    output$ui_frequency <- renderUI({
-      includeMarkdown(paste("lang/", input$language, "/frequency.md", sep = ""))
     })
     output$ui_innate <- renderUI({
       includeMarkdown(paste("lang/", input$language, "/innate.md", sep = ""))
