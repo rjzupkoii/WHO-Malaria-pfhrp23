@@ -54,8 +54,8 @@ ui <- fluidPage(
   ),
 
   # Set the main application title
-  titlePanel(i18n$t("hrp2/3 Deletion Risk Explorer"),
-             windowTitle = "hrp2/3 Deletion Risk Explorer"),
+  titlePanel(i18n$t("Deletion Risk Explorer"),
+             windowTitle = "Deletion Risk Explorer"),
 
   # Sidebar panel for inputs
   sidebarPanel(

@@ -22,3 +22,19 @@ h4.panel-title {
 .panel-heading .panel-title a:not([class]):after {
     transform: rotate(180deg);
 }
+
+/* Apply the table formatting */
+th {
+    border-bottom: 2px solid black;
+    font-weight: bold;
+    padding: 1em 0 0 0.5em;
+    text-align: left;
+}
+
+td {
+    padding: 0.25em 0.75em 0.25em 0.5em;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
