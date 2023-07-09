@@ -109,9 +109,9 @@ ui <- fluidPage(
     wellPanel(
       selectInput("language",
                   label = i18n$t("Change Language"),
-                  choices = list("English" = "en", 
-                                 "Français" = "fr",
-                                 "Español" = "es"),
+                  choices = list("English" = "en",
+                                 "Español" = "es",
+                                 "Français" = "fr"),
                   selected = i18n$get_translation_language())
     )
   ),

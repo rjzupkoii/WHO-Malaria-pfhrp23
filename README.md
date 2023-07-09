@@ -36,6 +36,18 @@ runApp('R/launch.R')
 
 The first time that the app runs warnings may be produced by `CPL_gdal_init()`, but these can generally be ignored if the app loads successfully.
 
+## Contributing Translations
+
+Additional language translations are welcomed and should be submitted as a pull request on GitHub after forking the [rjzupkoii/WHO-Malaria-pfhrp23](https://github.com/rjzupkoii/WHO-Malaria-pfhrp23) repository on GitHub. 
+
+The directory `R/lang` contains all of the necessary files for the user interface, structured as follows:
+
+- Directories that are the [two character ISO language code](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) (ex., `lang/es` for Spanish) containing Markdown files (ex., `explainer.md`) that are rendered as such, with some adjustments to the layout supplied by `style.css`. All Markdown files in `lang/en` need to be supplied as part of a new translation.
+- CSV files named as `translation_[ISO CODE].csv` (ex., `translation_fr.csv` for French) that contains two columns. The first of which is `en` and contains the English labels in the user interface, and the second two character ISO code for the target language and contains the translated text. 
+- The `translation.yml` file which supplies the translation for rendered maps. The top level key for each language is the two character ISO code, followed by fields for `choices`, `regions`, `labels`, `risk_map`, and `composite_map`. 
+
+When the loads for a user it defaults to English, after which the language can be changed by the user via the Change Language dropdown list. The list of language is determined by the contents of the `choices` list supplied to the `language` `selectInput` control. New languages will need to be added to this `choices` list and should be added in alphabetical order, with the control text being the name of the language as it would appear to a native speaker (i.e., French is listed as Français in the list). The value returned by the control is the two character ISO language code, which is the used to select the correct language information from the server.
+
 ---
 
 ## Sources / Licenses
