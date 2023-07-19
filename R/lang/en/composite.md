@@ -1,7 +1,8 @@
-**Composite Risk**
+**Prospective Risk**
 
-Composite risk is a measure of how quickly *pfhrp2\/3* deletions are predicted to spread to each region based upon the current understanding of where the deletions are present and assumed speeds for spreading between regions. We assign risk by how quickly regions reach a specific frequency.
+Prospective risk is a measure of how quickly *pfhrp2\/3* deletions are predicted to spread in Africa based on current estimates from the WHO Malaria Threat Maps and assumed speeds for spreading between regions. We assign risk by how quickly regions reach the WHO threshold for recommending a switch in front-line RDT due to *pfhrp2\/3*, which is determined by more than 5% of clinically relevant infections being misdiagnosed due to pfhrp2/3 gene deletions.
 
-- High Risk represents >20% infection due to only *pfhrp2*-deleted mutants by 2026.
-- Medium Risk represents >20% infection due to only *pfhrp2*-deleted mutants by 2030.
-- Low Risk represents >20% infection due to only *pfhrp2*-deleted mutants by 2040.
+- High Risk: >5% in 6 years.
+- Medium Risk: >5% in 12 years.
+- Low Risk: >5% in 20 years.
+- Marginal Risk: <5% in 20 years.

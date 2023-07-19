@@ -54,8 +54,8 @@ ui <- fluidPage(
   ),
 
   # Set the main application title
-  titlePanel(i18n$t("Deletion Risk Explorer"),
-             windowTitle = "Deletion Risk Explorer"),
+  titlePanel(i18n$t("pfhrp2/3 Deletion Risk Explorer"),
+             windowTitle = "pfhrp2/3 Deletion Risk Explorer"),
 
   # Sidebar panel for inputs
   sidebarPanel(
@@ -68,7 +68,7 @@ ui <- fluidPage(
                       label = i18n$t("Probability of seeking treatment for malaria fever"),
                       choices = choices_list_en, selected = 2),
           selectInput("rdt_deleted",
-                      label = i18n$t("Probability of deletions yielding a positive RDT"),
+                      label = i18n$t("Probability of HRP3 cross reacting to yield a positive RDT"),
                       choices = choices_list_en, selected = 2),
           selectInput("rdt_nonadherence",
                       label = i18n$t("Probability of adherence to RDT outcomes"),
@@ -127,7 +127,7 @@ ui <- fluidPage(
         uiOutput("ui_innate")
       ),
 
-      tabPanel(i18n$t("Composite Risk"),
+      tabPanel(i18n$t("Prospective Risk"),
         plotOutput("plot_composite", width = "100%", inline = TRUE) %>% withSpinner(color = "#E5E4E2"),
         br(),
         uiOutput("ui_composite")
