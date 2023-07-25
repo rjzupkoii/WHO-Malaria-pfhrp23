@@ -1,10 +1,10 @@
-﻿en,es
+en,es
 
 Deletion Risk Explorer,Explorador de riesgos de eliminación
 
 Treatments,Tratos
 Probability of seeking treatment for malaria fever,Probabilidad de buscar tratamiento para la fiebre palúdica
-Probability of deletions yielding a positive RDT,Probabilidad de deleciones que produzcan una RDT positiva
+HRP3 Cross-Reactivity,Reactividad cruzada HRP3
 Probability of adherence to RDT outcomes,Probabilidad de adherencia a los resultados de la PDR
 Probability of using microscopy for malaria diagnosis,Probabilidad de usar microscopía para el diagnóstico de malaria
 
@@ -18,4 +18,4 @@ Change Language,Cambiar idioma
 
 Description,Descripción
 Innate Risk,Riesgo innato
-Composite Risk,Riesgo compuesto
+Prospective Risk,Riesgo prospectivo
