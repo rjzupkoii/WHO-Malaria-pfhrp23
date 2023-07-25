@@ -4,7 +4,7 @@
 
 Malaria rapid diagnostic tests (RDTs) commonly deployed for the diagnosis of *Plasmodium falciparum* malaria detect the *P. falciparum* histidine-rich protein 2 (PfHRP2) and its paralog *P. falciparum* histidine-rich protein 3 (PfHRP3). However, progress against malaria is now threatened by an increase in *pfhrp2\/3* gene deletions. 
 
-The timeline for countries to transition away from HRP2-based RDTs to alternative diagnostic methods is dependent upon several factors, which include: malaria transmission intensity, treatment-seeking and testing patterns and RDT usage. The objective of this *pfhrp2\/3* deletion risk explorer is to allow users to explore how changes in the underlying modelling assumptions impact the risk of *pfhrp2\/3* continuing to spread.  
+The timeline for countries to transition away from HRP2-based RDTs to alternative diagnostic methods is dependent upon several factors, which include: malaria transmission intensity, treatment-seeking, testing patterns, and RDT usage. The objective of this *pfhrp2\/3* deletion risk explorer is to allow users to explore how changes in the underlying modelling assumptions impact the risk of *pfhrp2\/3* continuing to spread.  
 
 ## Model Description
 
