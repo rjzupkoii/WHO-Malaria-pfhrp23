@@ -128,9 +128,9 @@ ui <- fluidPage(
       ),
 
       tabPanel(i18n$t("Prospective Risk"),
-        plotOutput("plot_composite", width = "100%", inline = TRUE) %>% withSpinner(color = "#E5E4E2"),
+        plotOutput("plot_prospective", width = "100%", inline = TRUE) %>% withSpinner(color = "#E5E4E2"),
         br(),
-        uiOutput("ui_composite")
+        uiOutput("ui_prospective")
       ),
 
     )

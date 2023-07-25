@@ -40,8 +40,8 @@ parse_input <- function(input, output) {
      width = 0.6 * as.numeric(input$dimension[1])
   )
 
-  output$plot_composite <- renderPlot({
-    plot_composite_map(parameters, data_file, translations_file)
+  output$plot_prospective <- renderPlot({
+    plot_prospective_map(parameters, data_file, translations_file)
   }, height = 0.7 * as.numeric(input$dimension[2]),
      width = 0.6 * as.numeric(input$dimension[1])
   )
@@ -103,8 +103,8 @@ server <- function(input, output, session) {
     updateSelectInput(session, "region", choices = regions_translated, selected = input$region)
 
     # Update the various markdown texts
-    output$ui_composite <- renderUI({
-      includeMarkdown(paste("lang/", input$language, "/composite.md", sep = ""))
+    output$ui_prospective <- renderUI({
+      includeMarkdown(paste("lang/", input$language, "/prospective.md", sep = ""))
     })
     output$ui_explainer <- renderUI({
       includeMarkdown(paste("lang/", input$language, "/explainer.md", sep = ""))

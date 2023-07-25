@@ -52,8 +52,8 @@ plot_risk_map <- function(parameters, data_file, language_file) {
           plot.margin=grid::unit(c(0,0,0,0), "mm"))
 }
 
-# Produce the HRP2 composite risk map
-plot_composite_map <- function(parameters, data_file, language_file) {
+# Produce the HRP2 prospective risk map
+plot_prospective_map <- function(parameters, data_file, language_file) {
   map <- prepare(parameters, data_file)
   labels <- read_yaml(file(language_file))
 
@@ -61,7 +61,7 @@ plot_composite_map <- function(parameters, data_file, language_file) {
     geom_sf(aes(fill = factor(hrp2_composite_risk))) +
     scale_fill_manual(values = risk_palette, 
                       labels = labels[[parameters$language]]$labels, 
-                      name = labels[[parameters$language]]$composite_map) +
+                      name = labels[[parameters$language]]$prospective_map) +
     theme_void() +
     theme(legend.position = "bottom",
           plot.margin=grid::unit(c(0,0,0,0), "mm"))

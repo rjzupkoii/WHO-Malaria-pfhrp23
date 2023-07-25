@@ -3,16 +3,16 @@ en:
   regions: ["Global", "Africa", "Asia", "Latin America"]
   labels: ["High", "Moderate", "Slight", "Marginal", "No Data"]
   risk_map: "Innate Risk"
-  composite_map: "Composite Risk"
+  prospective_map: "Prospective Risk"
 fr:
   choices: ["Optimiste", "Central", "Pire"]
   regions: ["Mondial", "Afrique", "Asie", "l'Amérique latine"]
   labels: ["Haut", "Modéré", "Faible", "Marginal", "Pas de données"]
   risk_map: "Rang inné"
-  composite_map: "Risque composé"
+  prospective_map: "Risque prospectif"
 es:
   choices: ["Optimista", "Central", "Peor"]
   regions: ["Global", "África", "Asia", "América Latina"]
   labels: ["Alto", "Moderar", "Pequeño", "Marginal", "Sin datos"]
   risk_map: "Rango innato"
-  composite_map: "Riesgo compuesto"
+  prospective_map: "Riesgo prospectivo"
