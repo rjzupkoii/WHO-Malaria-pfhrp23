@@ -106,7 +106,7 @@ def main(refresh=False):
     filename = 'temp/full_results.csv'
     if refresh:
         print('Downloading data file...')
-        urllib.request.urlretrieve('https://media.githubusercontent.com/media/OJWatson/hrpup/main/analysis/tables/full_results.csv', filename)
+        urllib.request.urlretrieve('https://github.com/OJWatson/hrpup/raw/main/analysis/data_out/full_results.csv', filename)
         print('done!')
 
     # Map the regions
@@ -123,4 +123,4 @@ def main(refresh=False):
         print('Cleaned and mapped results saved as: ', coded)
 
 if __name__ == '__main__':
-    main(False)
+    main()
