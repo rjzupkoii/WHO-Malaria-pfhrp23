@@ -10,20 +10,14 @@
 # from the R6_map.rds file.
 import os
 import pandas as pd
-import re
 import urllib.request
-
-from unidecode import unidecode
 
 # The following comes from https://github.com/OJWatson/hrpup
 ANALYSIS_DATA = 'temp/full_results.csv'
 ANALYSIS_URL = 'https://github.com/OJWatson/hrpup/raw/main/analysis/data_out/full_results.csv'
 
 # The following comes from https://github.com/wooorm/iso-3166
-ISO_6166_1 = 'temp/iso_3166-1.csv'
-ISO_6166_2 = 'temp/iso_3166-2.csv'
-ISO_6166_TEMPLATE = 'temp/iso_3166-{}.csv'
-ISO_6166_URL = 'https://raw.githubusercontent.com/wooorm/iso-3166/main/{}.js'
+ISO_6166_1 = '../data/iso_3166-1.csv'
 
 # The following is produced by this script
 ERRORS_LOG = 'temp/errors.txt'
@@ -60,86 +54,18 @@ def clean_results(filename):
     return 'temp/clean.csv'
 
 
-def get_iso(level):
-    TEMP_FILE = 'temp/{}.js'
-    working = []
-
-    # Download the data
-    print('Downloading ISO 3166-{} codes...'.format(level), end='', flush=True)
-    urllib.request.urlretrieve(ISO_6166_URL.format(level), TEMP_FILE.format(level))
-    print('done!')    
-
-    # Read the file and strip the header information
-    print('Parsing ISO 3166-{} codes...'.format(level), end='', flush=True)
-    with open(TEMP_FILE.format(level), 'r') as file:
-        data = file.read()
-    data = data[data.find('export const iso3166{}'.format(level)):]
-
-    # Parse the subregion codes out of the file
-    while data.find('}') != -1:
-        # Find the subregion
-        lbrace = data.find('{')
-        rbrace = data.find('}')
-        region = data[lbrace + 1:rbrace]
-
-        # Update our list
-        matched = re.findall(r"['\"](.*)[\"']", region)
-        if matched != None and level == 1:
-            working.append('{},{},{},"{}"\n'.format(int(matched[4]),matched[2],matched[3], unidecode(matched[0])))
-        elif matched != None and level == 2:
-            working.append('{},{},"{}"\n'.format(matched[2], matched[0], unidecode(matched[1])))
-
-        # Move to the next group
-        data = data[rbrace + 1:]
-
-    # Save the data to disk
-    with open(ISO_6166_TEMPLATE.format(level), 'w') as file:
-        if level == 1:
-            file.write('numeric,alpha2,alpha3,name\n')
-        elif level == 2:
-            file.write('parent,code,name\n')
-        for line in working:
-            file.write(line)
-    print('done!')
-
-
 def map_iso(clean_filename, mapping_filename):
-    # Recursive assignment to allow for duplicate subregions to be resolved
-    def assign(subregion, recursive = False):
-        message = None
-        if len(subregion) == 0:
-            message = 'Subregion not found: {}, country: {}'.format(row.subregion, row.iso)
-        elif len(subregion) == 1:
-            data.at[index, 'subregion'] = subregion.code.item()
-        elif not recursive:
-            assign(subregion[subregion.parent.str.startswith(country.alpha2.item())], True)
-        else:
-            message = 'Duplicate regions found for: {}, country: {}'.format(row.subregion, row.iso)
-        return message
 
     # Load the relevant data
     data = pd.read_csv(clean_filename)
     iso_world = pd.read_csv(ISO_6166_1)
-    iso_region = pd.read_csv(ISO_6166_2)
     
     # Set the working variables, then start processing the data
     errors, rows = [], len(data.index)
     for index, row in data.iterrows():
     
-        # Match the country, then match the region. Use the assign function to actually make the assignment.
-        country = iso_world[iso_world.alpha3 == row.iso]
-        message = assign(iso_region[iso_region.name == row.subregion])
-
-        # Deal with any errors in matching
-        if message != None and message not in errors:
-            print(message)
-            with open(ERRORS_LOG, 'a') as out:
-                out.write(message + '\n')
-            errors.append(message)
-            message = None
-
-        # Update the ISO code
-        data.at[index, 'iso'] = country.numeric.item()
+        # Match the country, and update the ISO code
+        data.at[index, 'iso'] = iso_world[iso_world.alpha3 == row.iso].numeric.item()
 
         # Let the user know we didn't crash 
         if index % 10000 == 0:
@@ -195,10 +121,6 @@ def main(refresh=False):
         print('Downloading data file...', end='', flush=True)
         urllib.request.urlretrieve(ANALYSIS_URL, ANALYSIS_DATA)
         print('done!')
-    if not os.path.isfile(ISO_6166_1) or refresh:
-        get_iso(1)
-    if not os.path.isfile(ISO_6166_2) or refresh:
-        get_iso(2)
 
     # Map the regions
     if not os.path.isfile(REGION_MAPPING):
