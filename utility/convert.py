@@ -15,6 +15,8 @@ import urllib.request
 # The following comes from https://github.com/OJWatson/hrpup
 ANALYSIS_DATA = 'temp/full_results.csv'
 ANALYSIS_URL = 'https://github.com/OJWatson/hrpup/raw/main/analysis/data_out/full_results.csv'
+COVARIATE_DATA = 'temp/covariate_ranges.rds'
+COVARIATE_RANGES = 'https://github.com/OJWatson/hrpup/raw/main/analysis/data_derived/global_covariate_ranges.rds'
 
 # The following comes from https://github.com/wooorm/iso-3166
 ISO_6166_1 = '../data/iso_3166-1.csv'
@@ -121,6 +123,10 @@ def main(refresh=False):
         print('Downloading data file...', end='', flush=True)
         urllib.request.urlretrieve(ANALYSIS_URL, ANALYSIS_DATA)
         print('done!')
+    if not os.path.isfile(COVARIATE_DATA) or refresh:
+        print('Downloading covariant data...', end='', flush=True)
+        urllib.request.urlretrieve(COVARIATE_RANGES, COVARIATE_DATA)
+        print('done!')
 
     # Map the regions
     if not os.path.isfile(REGION_MAPPING):
@@ -130,7 +136,7 @@ def main(refresh=False):
     
     # Prepare the coded data file
     print('Processing data file...')
-    # clean = clean_results(ANALYSIS_DATA)
+    clean = clean_results(ANALYSIS_DATA)
     coded = map_iso('temp/clean.csv', 'data/mapping.csv')
     print('Cleaned and mapped results saved as: ', coded)
 
