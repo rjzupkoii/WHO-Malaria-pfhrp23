@@ -23,25 +23,29 @@ if (!file.exists("utility/temp/map_worldmap.shp")) {
   sf::st_write(worldmap, "utility/temp/map_worldmap.shp")  
 }
 
-# Remove the columns we don't need
-worldmap <- worldmap[,!names(worldmap) %in% 
-                       c("admn_level", "type_0", "type_1", "name_2", "id_2", "type_2", 
-                         "name_3", "id_3", "type_3", "source", "country_level")]
-
-# Load the regions and parse out the names, the data within the regions list can
-# then be accessed as follows: index <- which(regions$names == 'Asia')
-connection <- file("utility/out/mapping.yml")
-regions <- read_yaml(connection)
-regions$names <- unlist(list.flatten(regions, use.names = FALSE, classes = "character"))
-rm(connection)
-
-# Load the data set and covert the labeled regions to id_1
+# Load the data set and covert the labeled admin level 2 (i.e., subregion) to id_1
 dataset <- read.csv( "utility/out/coded.csv")
-mapping <- sf::st_drop_geometry(select(worldmap, "name_1", "id_1"))
+mapping <- sf::st_drop_geometry(select(worldmap, "name_1", "id_0", "id_1"))
 dataset <- merge(x = dataset, y = mapping, by.x = "subregion", by.y = "name_1")
-dataset <- dataset[, !names(dataset) %in% c("subregion")]
-colnames(dataset)[colnames(dataset) == "id_1"] ="subregion"
+dataset <- dataset[, !names(dataset) %in% c("iso", "subregion")]
 rm(mapping)
 
+# Load the mapping of sub-regions and the global region ids
+mapping <- read.csv("utility/out/mapping.csv")
+mapping <- mapping[, !names(mapping) %in% c("iso", "region")]
+dataset <- merge(x = dataset, y = mapping, by.x = "id_1", by.y = "id_1")
+rm(mapping)
+
+# Rename the columns
+colnames(dataset)[colnames(dataset) == "id_0"] = "map_country"
+colnames(dataset)[colnames(dataset) == "id_1"] = "map_subregion"
+colnames(dataset)[colnames(dataset) == "region_id"] = "global_region"
+
+# Remove the columns we don't need
+worldmap <- worldmap[,!names(worldmap) %in% 
+                       c("iso", "admn_level", "country_level", "id_2", "id_3",
+                         "name_0", "name_1", "name_2", "name_3",
+                         "type_0", "type_1", "type_2", "type_3", "source")]
+
 # Save the data
-save(worldmap, dataset, regions, file = "data/data.RData")
+save(worldmap, dataset, file = "R/data/data.RData")
