@@ -54,4 +54,4 @@ When the loads for a user it defaults to English, after which the language can b
 
 Underlying model data from [hrpup](https://github.com/OJWatson/hrpup), which is released under [CC-0](https://creativecommons.org/publicdomain/zero/1.0/).
 
-World map data is from [Natural Earth](https://www.naturalearthdata.com/downloads/50m-cultural-vectors/50m-admin-0-countries-2/) (version 5.1.1), which is in the public domain.
+World map data in `utility/data/map_worldmap_simple.zip` and `R/data/data.RData` is from the Malaria Atlas Project which [licenses all data](https://malariaatlas.org/open-access-policy/) under the Creative Commons Attribution 3.0 Unported License (CC BY 3.0). The simplified world map was produced using ArcGIS Pro (version 3.1.2) via the "Simplify Polygon" tool, using the Douglas-Peucker algorithm and a simplification tolerance of 0.05 decimal degrees. The resulting shapefile is suitable for small scale maps and choropleths. 
