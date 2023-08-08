@@ -4,10 +4,6 @@
 #
 # This script processes the R data from R6_map.rds to generate a single file 
 # for plotting. 
-#
-# Order of operations is clean_results, then map_iso; map_regions is provided 
-# to generate a JSON file based upon the country-region mapping as extracted
-# from the R6_map.rds file.
 import os
 import pandas as pd
 import urllib.request
@@ -18,15 +14,15 @@ ANALYSIS_URL = 'https://github.com/OJWatson/hrpup/raw/main/analysis/data_out/ful
 COVARIATE_DATA = 'temp/covariate_ranges.rds'
 COVARIATE_RANGES = 'https://github.com/OJWatson/hrpup/raw/main/analysis/data_derived/global_covariate_ranges.rds'
 
-# The following comes from https://github.com/wooorm/iso-3166
-ISO_6166_1 = '../data/iso_3166-1.csv'
+# Data files referenced by this script
+REFERENCE_REGION_MAPPING = 'data/region_mapping.csv'
 
-# The following is produced by this script
-ERRORS_LOG = 'temp/errors.txt'
-REGION_MAPPING = 'out/mapping.yml'
+# Data files produced by this script
+REGION_MAPPING = 'out/mapping.csv'
+RESULTS_MAPPING = 'out/coded.csv'
 
 
-def clean_results(filename):
+def code_results(filename):
     # Expected headings: "","id_1","hrp2_risk","hrp2_prospective_risk","Micro.2.10","ft","microscopy.use","rdt.nonadherence","fitness","rdt.det","name_1","iso"
     data = pd.read_csv(filename)
 
@@ -52,71 +48,31 @@ def clean_results(filename):
         data = data[~data['iso'].isna()]
 
     # Save the file to our working directory
-    data.to_csv('temp/clean.csv', index=False)
-    return 'temp/clean.csv'
+    data.to_csv(RESULTS_MAPPING, index=False)
+    return RESULTS_MAPPING
 
 
-def map_iso(clean_filename, mapping_filename):
-
-    # Load the relevant data
-    data = pd.read_csv(clean_filename)
-    iso_world = pd.read_csv(ISO_6166_1)
-    
-    # Set the working variables, then start processing the data
-    errors, rows = [], len(data.index)
-    for index, row in data.iterrows():
-    
-        # Match the country, and update the ISO code
-        data.at[index, 'iso'] = iso_world[iso_world.alpha3 == row.iso].numeric.item()
-
-        # Let the user know we didn't crash 
-        if index % 10000 == 0:
-            print('Progress: {}%'.format(round((index / rows) * 100.0, 2)))
-
-    # Save any errors to the temp directory
-    if len(errors) != 0:
-        print('Errors saved to {}'.format(ERRORS_LOG))
-
-    # Save the data to our working directory
-    data.to_csv('out/coded.csv', index=False)
-    return 'out/coded.csv'
-
-
-def map_regions(filename):
+def code_regions(filename):
+    # Load the data provided
     data = pd.read_csv(filename)
-    iso_codes = pd.read_csv(ISO_6166_1)
+    
+    # Delete the row index column
+    del data[data.columns[0]]
 
-    # Note the unique regions
-    mapping = {}
-    for region in data.region.unique():
-        mapping[region] = []
-
-    # Map the country ISO codes to the regions
-    for _, row in data.iterrows():
-        iso3 = iso_codes[iso_codes.alpha3 == row.iso.lower()].id.item()
-        if iso3 not in mapping[row.region]:
-            mapping[row.region].append(iso3)
-
-    # Save as YAML
-    with open('out/mapping.yml', 'w') as out:
-        ndx = 0
-        for key in mapping:
-            out.write('{}:\n'.format(ndx))
-            out.write('  region: {}\n'.format(key))
-            values = ', '.join(map(str, mapping[key]))
-            out.write('  iso3n: [{}]\n'.format(values))
-            ndx += 1
-    return 'out/mapping.yml'
+    # Add a region id column
+    data['region_id'] = ''
+    for value, label in enumerate(['Africa', 'Asia', 'Latin America and the Caribbean', 'Oceania']):
+        data.loc[data['region'] == label, 'region_id'] = value + 2
+    
+    # Save the data to our out directory
+    data.to_csv(REGION_MAPPING, index=False)
+    return REGION_MAPPING
 
 
 def main(refresh=False):
     # Make our temp and output directories
     os.makedirs('temp', exist_ok=True)
     os.makedirs('out', exist_ok=True)
-
-    # Remove existing errors
-    if os.path.isfile(ERRORS_LOG):
-        os.remove(ERRORS_LOG)
 
     # Get or refresh the data as needed
     if not os.path.isfile(ANALYSIS_DATA) or refresh:
@@ -128,17 +84,9 @@ def main(refresh=False):
         urllib.request.urlretrieve(COVARIATE_RANGES, COVARIATE_DATA)
         print('done!')
 
-    # Map the regions
-    if not os.path.isfile(REGION_MAPPING):
-        print('Mapping regions...')
-        mapping = map_regions('data/mapping.csv')
-        print('Mapped data saved as: ', mapping)
-    
-    # Prepare the coded data file
-    print('Processing data file...')
-    clean = clean_results(ANALYSIS_DATA)
-    coded = map_iso('temp/clean.csv', 'data/mapping.csv')
-    print('Cleaned and mapped results saved as: ', coded)
+    # Make sure the regions are coded with the order that we want
+    code_regions(REFERENCE_REGION_MAPPING)
+    code_results(ANALYSIS_DATA)
 
 
 if __name__ == '__main__':
