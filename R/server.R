@@ -14,15 +14,13 @@ translations_file <- "lang/translation.yml"
 
 # Function to parse the user inputs and produce the visual maps
 parse_input <- function(input, output) {
-  regions_mapping <- list("Global" = 1, "Africa" = 2, "Asia" = 3, "Latin America and the Caribbean" = 4)
-
   # Parse the parameters from the input
   parameters <- list(
     # Note the language to render in
     language = input$language,
 
     # Note the region to render
-    region = names(regions_mapping)[strtoi(input$region)],
+    region = strtoi(input$region),
 
     # Note the other settings from the UI
     treatment_seeking = strtoi(input$treatment_seeking),

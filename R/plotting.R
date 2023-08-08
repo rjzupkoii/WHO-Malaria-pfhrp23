@@ -25,13 +25,12 @@ prepare <- function(parameters, filename) {
   results <- subset(dataset, row.names(dataset) %in% indices)
 
   # Filter the results based upon the region selected
-  if (parameters$region != "Global") {
-    region <- regions[[which(regions$names == parameters$region)]]
-    results <- subset(results, results$iso %in% region$iso3n)
+  if (parameters$region != 1) {
+    results <- results[results$global_region == parameters$region, ]
   }
 
   # Prepare the geometry to be rendered
-  geometry <- merge(x = countries, y = results, by.x = "ISO_N3", by.y = "iso")
+  geometry <- merge(x = worldmap, y = results, by.x = "id_1", by.y = "map_subregion")
   return(geometry)
 }
 
@@ -58,7 +57,7 @@ plot_prospective_map <- function(parameters, data_file, language_file) {
   labels <- read_yaml(file(language_file))
 
   map %>% ggplot() +
-    geom_sf(aes(fill = factor(hrp2_composite_risk))) +
+    geom_sf(aes(fill = factor(hrp2_prospective_risk))) +
     scale_fill_manual(values = risk_palette, 
                       labels = labels[[parameters$language]]$labels, 
                       name = labels[[parameters$language]]$prospective_map) +

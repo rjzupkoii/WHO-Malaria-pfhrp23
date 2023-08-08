@@ -10,3 +10,10 @@ All other variables (`Micro.2.10`,`ft`,`microscopy.use`,`rdt.nonadherence`,`fitn
 1. 'best'
 2. 'central'
 3. 'worst'
+
+# Global Regions
+1. Global
+2. Africa
+3. Asia
+4. Latin America and the Caribbean
+5. Oceania
