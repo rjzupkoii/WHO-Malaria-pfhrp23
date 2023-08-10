@@ -1,0 +1,12 @@
+packages:
+  - dplyr
+  - ggplot2
+  - magrittr
+  - markdown
+  - rjson
+  - shiny
+  - shiny.i18n
+  - shinyBS
+  - shinycssloaders
+  - sf
+  - yaml

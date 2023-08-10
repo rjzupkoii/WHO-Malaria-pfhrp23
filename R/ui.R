@@ -8,7 +8,6 @@ library(shiny.i18n)
 library(shinyBS)
 library(shinycssloaders)
 
-
 # Define the default choices labels that will be shared, this is needed to make
 # sure the default values are set correctly
 choices_list_en <- list("Optimistic" = 1, "Central" = 2, "Worst" = 3)
