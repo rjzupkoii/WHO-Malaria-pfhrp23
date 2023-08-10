@@ -9,7 +9,6 @@ library(yaml)
 source("plotting.R")
 
 # Define the path to the map data
-data_file <- "data/data.RData"
 translations_file <- "lang/translation.yml"
 
 # Function to parse the user inputs and produce the visual maps
@@ -20,26 +19,26 @@ parse_input <- function(input, output) {
     language = input$language,
 
     # Note the region to render
-    region = strtoi(input$region),
+    region = plot_regions_enum[[strtoi(input$region)]],
 
     # Note the other settings from the UI
-    treatment_seeking = strtoi(input$treatment_seeking),
-    rdt_deleted = strtoi(input$rdt_deleted),
-    rdt_nonadherence = strtoi(input$rdt_nonadherence),
-    microscopy_usage = strtoi(input$microscopy_usage),
-    microscopy_prevalence = strtoi(input$microscopy_prevalence),
-    fitness = strtoi(input$fitness)
+    treatment_seeking = plot_choices_enum[[strtoi(input$treatment_seeking)]],
+    rdt_deleted = plot_choices_enum[[strtoi(input$rdt_deleted)]],
+    rdt_nonadherence = plot_choices_enum[[strtoi(input$rdt_nonadherence)]],
+    microscopy_usage = plot_choices_enum[[strtoi(input$microscopy_usage)]],
+    microscopy_prevalence = plot_choices_enum[[strtoi(input$microscopy_prevalence)]],
+    fitness = plot_choices_enum[[strtoi(input$fitness)]]
   )
 
   # Render the maps to the output object
   output$plot_innate <- renderPlot({
-    plot_risk_map_new(parameters, data_file, translations_file)
+    plot_risk_map(parameters, translations_file)
   }, height = 0.7 * as.numeric(input$dimension[2]),
      width = 0.6 * as.numeric(input$dimension[1])
   )
 
   output$plot_prospective <- renderPlot({
-    plot_prospective_map_new(parameters, data_file, translations_file)
+    plot_prospective_map(parameters, translations_file)
   }, height = 0.7 * as.numeric(input$dimension[2]),
      width = 0.6 * as.numeric(input$dimension[1])
   )
