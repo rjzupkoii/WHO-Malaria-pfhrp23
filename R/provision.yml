@@ -1,14 +1,12 @@
-self: true
 packages:
-  - ggplot2
   - dplyr
-  - markdown
-  - shiny
+  - ggplot2
   - magrittr
-  - yaml
-  - sf
+  - markdown
   - rjson
   - shiny
   - shiny.i18n
   - shinyBS
   - shinycssloaders
+  - sf
+  - yaml
