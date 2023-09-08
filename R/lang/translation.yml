@@ -16,3 +16,9 @@ es:
   labels: ["Alto", "Moderar", "Pequeño", "Marginal", "Sin datos"]
   risk_map: "Rango innato"
   prospective_map: "Riesgo prospectivo"
+pt:
+  choices: ["Otimista", "Central", "Pior"]
+  regions: ["Global", "África", "Ásia", "América Latina"]
+  labels: ["Alto", "Moderado", "Leve", "Marginal", "Sem dados"]
+  risk_map: “Risco Inato”
+  prospective_map: “Risco Prospectivo”

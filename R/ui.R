@@ -53,8 +53,8 @@ ui <- fluidPage(
   ),
 
   # Set the main application title
-  titlePanel(i18n$t("pfhrp2/3 Deletion Risk Explorer"),
-             windowTitle = "pfhrp2/3 Deletion Risk Explorer"),
+  titlePanel(i18n$t("Deletion Risk Explorer"),
+             windowTitle = "Deletion Risk Explorer"),
 
   # Sidebar panel for inputs
   sidebarPanel(
@@ -110,7 +110,8 @@ ui <- fluidPage(
                   label = i18n$t("Change Language"),
                   choices = list("English" = "en",
                                  "Español" = "es",
-                                 "Français" = "fr"),
+                                 "Français" = "fr",
+                                 "Português" = "pt"),
                   selected = i18n$get_translation_language())
     )
   ),
