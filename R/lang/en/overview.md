@@ -1,5 +1,3 @@
-# *pfhrp2\/3* Deletion Risk Explorer
-
 ## Introduction
 
 Malaria rapid diagnostic tests (RDTs) commonly deployed for the diagnosis of *Plasmodium falciparum* malaria detect the *P. falciparum* histidine-rich protein 2 (PfHRP2) and its paralog *P. falciparum* histidine-rich protein 3 (PfHRP3). However, progress against malaria is now threatened by an increase in *pfhrp2\/3* gene deletions. 

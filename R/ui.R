@@ -118,7 +118,7 @@ ui <- fluidPage(
   # Main panel for displaying the maps
   mainPanel(
     tabsetPanel(
-      tabPanel(i18n$t("Description"), uiOutput("ui_explainer")),
+      tabPanel(i18n$t("Overview"), uiOutput("ui_overview")),
 
       tabPanel(i18n$t("Innate Risk"),
         plotOutput("plot_innate", width = "100%", inline = TRUE) %>% withSpinner(color = "#E5E4E2"),
