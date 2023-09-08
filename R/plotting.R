@@ -42,10 +42,20 @@ plot_risk_map <- function(parameters, language_file) {
   # Apply the styling for the app
   map +
     scale_fill_manual(values = risk_palette, 
-                      labels = labels[[parameters$language]]$labels, 
-                      name = labels[[parameters$language]]$risk_map) +
+                      labels = labels[[parameters$language]]$labels,
+                      name = labels[[parameters$language]]$risk_map,
+                      guide = guide_legend(
+                        title.position = "top",
+                        title.theme = element_text(
+                          size = 14,
+                          face = "bold"
+                        ),
+                        label.theme = element_text(
+                          size = 12
+                        )
+                      )) +
     theme(legend.position = "bottom",
-          plot.margin=grid::unit(c(0,0,0,0), "mm"))  
+          plot.margin=grid::unit(c(0, 0, 0, 0), "mm"))
 }
 
 # Produce the HRP2 prospective risk map
@@ -72,8 +82,18 @@ plot_prospective_map <- function(parameters, language_file) {
   # Apply the styling for the app
   map  +
     scale_fill_manual(values = risk_palette, 
-                      labels = labels[[parameters$language]]$labels, 
-                      name = labels[[parameters$language]]$prospective_map) +
+                      labels = labels[[parameters$language]]$labels,
+                      name = labels[[parameters$language]]$prospective_map,
+                      guide = guide_legend(
+                        title.position = "top",
+                        title.theme = element_text(
+                          size = 14,
+                          face = "bold"
+                        ),
+                        label.theme = element_text(
+                          size = 12
+                        )
+                      )) +
     theme(legend.position = "bottom",
-          plot.margin=grid::unit(c(0,0,0,0), "mm"))
+          plot.margin=grid::unit(c(0, 0, 0, 0), "mm"))
 }
