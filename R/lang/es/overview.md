@@ -1,5 +1,3 @@
-# *pfhrp2\/3* Explicación del riesgo de eliminación
-
 ## Introducción
 Texto del marcador
 

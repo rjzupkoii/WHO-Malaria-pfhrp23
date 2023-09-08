@@ -106,6 +106,9 @@ server <- function(input, output, session) {
     output$ui_overview <- renderUI({
       includeMarkdown(paste("lang/", input$language, "/overview.md", sep = ""))
     })
+    output$ui_scores <- renderUI({
+      includeMarkdown(paste("lang/", input$language, "/scores.md", sep = ""))
+    })
     output$ui_fitness <- renderUI({
       includeMarkdown(paste("lang/", input$language, "/fitness.md", sep = ""))
     })

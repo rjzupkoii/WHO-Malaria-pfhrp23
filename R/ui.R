@@ -119,14 +119,15 @@ ui <- fluidPage(
   mainPanel(
     tabsetPanel(
       tabPanel(i18n$t("Overview"), uiOutput("ui_overview")),
+      tabPanel(i18n$t("About the Scores"), uiOutput("ui_scores")),
 
-      tabPanel(i18n$t("Innate Risk"),
+      tabPanel(i18n$t("Innate Risk Map"),
         plotOutput("plot_innate", width = "100%", inline = TRUE) %>% withSpinner(color = "#E5E4E2"),
         br(),
         uiOutput("ui_innate")
       ),
 
-      tabPanel(i18n$t("Prospective Risk"),
+      tabPanel(i18n$t("Prospective Risk Map"),
         plotOutput("plot_prospective", width = "100%", inline = TRUE) %>% withSpinner(color = "#E5E4E2"),
         br(),
         uiOutput("ui_prospective")

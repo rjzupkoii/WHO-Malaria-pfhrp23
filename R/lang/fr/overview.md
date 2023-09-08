@@ -1,5 +1,3 @@
-# *pfhrp2\/3* Explication des risques de suppression
-
 ## Introduction
 Texte d'espace réservé
 
