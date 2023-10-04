@@ -144,7 +144,7 @@ ui <- fluidPage(
         uiOutput("ui_innate")
       ),
 
-      tabPanel(i18n$t("Prospective Risk Map"),
+      tabPanel(i18n$t("Prospective Risk Map (Africa Only)"),
         plotOutput("plot_prospective", width = "100%", inline = TRUE) %>% withSpinner(color = "#E5E4E2"),
         br(),
         uiOutput("ui_prospective")
