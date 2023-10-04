@@ -8,9 +8,10 @@ library(shiny.i18n)
 library(shinyBS)
 library(shinycssloaders)
 
-# Define the default choices labels that will be shared, this is needed to make
-# sure the default values are set correctly
+# Define the choices and regions lists in the default language
 choices_list_en <- list("Optimistic" = 1, "Central" = 2, "Worst" = 3)
+regions_list_en <- list("Global" = 1, "Africa" = 2, "Asia" = 3, "Latin America" = 4)
+
 
 # Define our translations and default language
 i18n <- Translator$new(translation_csvs_path = "lang", translation_csv_config = "lang/config.yml")
@@ -58,53 +59,68 @@ ui <- fluidPage(
 
   # Sidebar panel for inputs
   sidebarPanel(
+    bsCollapse(id = "side_panel",
 
-    bsCollapse(id = "side_panel", open = "Treatments",
-
-      bsCollapsePanel("Treatments",
+      bsCollapsePanel("Treatment Seeking Rate",
         wellPanel(
           selectInput("treatment_seeking",
                       label = i18n$t("Probability of seeking treatment for malaria fever"),
                       choices = choices_list_en, selected = 2),
+          helpText(uiOutput("ui_help_treatment"))
+        )),
+
+      bsCollapsePanel("HRP3 Cross-Reactivity",
+        wellPanel(
           selectInput("rdt_deleted",
                       label = i18n$t("Probability of HRP3 cross reacting to yield a positive RDT"),
                       choices = choices_list_en, selected = 2),
+          helpText(uiOutput("ui_help_reactivity"))
+        )),
+
+      bsCollapsePanel("Adherence to RDT Outcomes",
+        wellPanel(
           selectInput("rdt_nonadherence",
                       label = i18n$t("Probability of adherence to RDT outcomes"),
                       choices = choices_list_en, selected = 2),
+          helpText(uiOutput("ui_help_adherence")),
+        )),
+
+      bsCollapsePanel("Microscopy Based Diagnosis	",
+        wellPanel(
           selectInput("microscopy_usage",
                       label = i18n$t("Probability of using microscopy for malaria diagnosis"),
                       choices = choices_list_en, selected = 2),
-          helpText(uiOutput("ui_treatment")),
-          )),
+          helpText(uiOutput("ui_help_microscopy")),
+        )),
 
       bsCollapsePanel("Malaria Prevalence",
         wellPanel(
           selectInput("microscopy_prevalence",
                       label = i18n$t("Assumed malaria prevalence for ages 2 to 10"),
                       choices = choices_list_en, selected = 2),
-          helpText(uiOutput("ui_prevalence")),
-          )),
+          helpText(uiOutput("ui_help_prevalence")),
+        )),
 
       bsCollapsePanel("Deletion Fitness",
         wellPanel(
           selectInput("fitness",
                       label = i18n$t("Assumed fitness compared to the wild type"),
                       choices = choices_list_en, selected = 2),
-          helpText(uiOutput("ui_fitness")),
-        )),
-
-      bsCollapsePanel("Region",
-        wellPanel(
-          selectInput("region",
-            label = i18n$t("Region"),
-            choices = list("Global" = 1, "Africa" = 2, "Asia" = 3, "Latin America" = 4), 
-            selected = 2),
+          helpText(uiOutput("ui_help_fitness")),
         ))
     ),
 
-    # Additional controls
+    # Spacer between the control blocks
     br(),
+
+    # Region selection controls
+    wellPanel(
+      selectInput("region",
+                  label = i18n$t("Region"),
+                  choices = regions_list_en, selected = 2),
+    ),
+
+    # Language controls
     wellPanel(
       selectInput("language",
                   label = i18n$t("Change Language"),

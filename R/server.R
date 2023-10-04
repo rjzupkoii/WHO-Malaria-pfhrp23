@@ -99,27 +99,38 @@ server <- function(input, output, session) {
     }
     updateSelectInput(session, "region", choices = regions_translated, selected = input$region)
 
-    # Update the various markdown texts
-    output$ui_prospective <- renderUI({
-      includeMarkdown(paste("lang/", input$language, "/prospective.md", sep = ""))
-    })
+    # Update the various core explainer texts, ordered from left to right of page
     output$ui_overview <- renderUI({
       includeMarkdown(paste("lang/", input$language, "/overview.md", sep = ""))
     })
     output$ui_scores <- renderUI({
       includeMarkdown(paste("lang/", input$language, "/scores.md", sep = ""))
     })
-    output$ui_fitness <- renderUI({
-      includeMarkdown(paste("lang/", input$language, "/fitness.md", sep = ""))
-    })
     output$ui_innate <- renderUI({
       includeMarkdown(paste("lang/", input$language, "/innate.md", sep = ""))
     })
-    output$ui_prevalence <- renderUI({
-      includeMarkdown(paste("lang/", input$language, "/prevalence.md", sep = ""))
+    output$ui_prospective <- renderUI({
+      includeMarkdown(paste("lang/", input$language, "/prospective.md", sep = ""))
     })
-    output$ui_treatment <- renderUI({
-      includeMarkdown(paste("lang/", input$language, "/treatment.md", sep = ""))
+
+    # Update the various help texts, ordered from top to bottom of the page
+    output$ui_help_treatment <- renderUI({
+      includeMarkdown(paste("lang/", input$language, "/help_treatment.md", sep = ""))
+    })
+    output$ui_help_reactivity <- renderUI({
+      includeMarkdown(paste("lang/", input$language, "/help_reactivity.md", sep = ""))
+    })
+    output$ui_help_adherence <- renderUI({
+      includeMarkdown(paste("lang/", input$language, "/help_adherence.md", sep = ""))
+    })
+    output$ui_help_microscopy <- renderUI({
+      includeMarkdown(paste("lang/", input$language, "/help_microscopy.md", sep = ""))
+    })
+    output$ui_help_prevalence <- renderUI({
+      includeMarkdown(paste("lang/", input$language, "/help_prevalence.md", sep = ""))
+    })
+    output$ui_help_fitness <- renderUI({
+      includeMarkdown(paste("lang/", input$language, "/help_fitness.md", sep = ""))
     })
 
     # Regenerate the map

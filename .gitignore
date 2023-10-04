@@ -14,3 +14,6 @@
 # Exclude any temporary directories
 **/temp/**
 utility/out/**
+
+# Exclude text documents unless explicitly included
+**/**.docx
