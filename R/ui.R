@@ -85,7 +85,7 @@ ui <- fluidPage(
           helpText(uiOutput("ui_help_adherence")),
         )),
 
-      bsCollapsePanel("Microscopy Based Diagnosis	",
+      bsCollapsePanel("Microscopy Based Diagnosis",
         wellPanel(
           selectInput("microscopy_usage",
                       label = i18n$t("Probability of using microscopy for malaria diagnosis"),

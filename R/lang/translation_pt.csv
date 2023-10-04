@@ -2,17 +2,12 @@ en,pt
 
 Deletion Risk Explorer,Explorador de risco de exclusão
 
-Treatments,Tratamentos
-Probability of seeking treatment for malaria fever,Probabilidade de procurar tratamento para a febre da malária
+Treatment Seeking Rate,Taxa de procura de tratamento
 HRP3 Cross-Reactivity,Reatividade cruzada HRP3
-Probability of adherence to RDT outcomes,Probabilidade de adesão aos resultados do RDT
-Probability of using microscopy for malaria diagnosis,Probabilidade de usar microscopia para diagnóstico de malária
-
+Adherence to RDT Outcomes,Adesão aos resultados do RDT
+Microscopy Based Diagnosis,Diagnóstico Baseado em Microscopia
 Malaria Prevalence,Prevalência da malária
-Assumed malaria prevalence for ages 2 to 10,Prevalência presumida da malária nas idades de 2 a 10 anos
-
-Deletion Fitness,Exclusão de condicionamento físico
-Assumed fitness compared to the wild type,Aptidão física assumida em comparação com o tipo selvagem
+Deletion Fitness,Exclusão Fitness
 
 Region,Região
 Change Language,Mudar idioma

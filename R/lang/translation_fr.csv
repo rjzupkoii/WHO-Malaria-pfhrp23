@@ -2,17 +2,12 @@ en,fr
 
 Deletion Risk Explorer,Explorateur des risques de suppression
 
-Treatments,Traitements
-Probability of seeking treatment for malaria fever,Probabilité de rechercher un traitement contre la fièvre palustre
+Treatment Seeking Rate,Taux de recherche de traitement
 HRP3 Cross-Reactivity,Réactivité croisée HRP3
-Probability of adherence to RDT outcomes,Probabilité d'adhésion aux résultats du TDR
-Probability of using microscopy for malaria diagnosis,Probabilité d'utiliser la microscopie pour le diagnostic du paludisme
-
+Adherence to RDT Outcomes,Adhésion aux résultats du RDT
+Microscopy Based Diagnosis,Diagnostic basé sur la microscopie
 Malaria Prevalence,Prévalence du paludisme
-Assumed malaria prevalence for ages 2 to 10,Prévalence présumée du paludisme pour les enfants de 2 à 10 ans
-
-Deletion Fitness,Remise en forme de suppression
-Assumed fitness compared to the wild type,Aptitude présumée par rapport au type sauvage
+Deletion Fitness,Suppression de remise en forme
 
 Region,Région
 Change Language,Changer de langue
