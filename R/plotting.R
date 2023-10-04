@@ -9,7 +9,10 @@ library(sf)
 library(yaml)
 
 # Define the palette for rendering the map
-risk_palette <- c("#882255", "#DDCC77", "#88CCEE", "#44AA99", "#E5E4E2")
+risk_palette <- c("#882255", "#DDCC77", "#88CCEE", "#44AA99", "#FFFFFF")
+
+# Define the labels expected in the underlying data set
+existing_labels <- c("High", "Moderate", "Slight", "Marginal", "No Data")
 
 # Define the enumeration that the server can use to filter the risk data
 plot_choices_enum <- list(`1` = "best", `2` = "central", `3` = "worst")
@@ -30,7 +33,7 @@ plot_risk_map <- function(parameters, language_file) {
     microscopy.use = parameters$microscopy_usage,
     rdt.nonadherence = parameters$rdt_nonadherence,
     fitness = parameters$fitness,
-    rdt.det = parameters$rdt_deleted, 
+    rdt.det = parameters$rdt_deleted,
     region = parameters$region,
     risk = "innate",
     print = FALSE
@@ -41,7 +44,8 @@ plot_risk_map <- function(parameters, language_file) {
 
   # Apply the styling for the app
   map +
-    scale_fill_manual(values = risk_palette, 
+    scale_fill_manual(values = risk_palette,
+                      limits = existing_labels,
                       labels = labels[[parameters$language]]$labels,
                       name = labels[[parameters$language]]$risk_map,
                       guide = guide_legend(
@@ -55,7 +59,7 @@ plot_risk_map <- function(parameters, language_file) {
                         )
                       )) +
     theme(legend.position = "bottom",
-          plot.margin=grid::unit(c(0, 0, 0, 0), "mm"))
+          plot.margin = grid::unit(c(0, 0, 0, 0), "mm"))
 }
 
 # Produce the HRP2 prospective risk map
@@ -70,7 +74,7 @@ plot_prospective_map <- function(parameters, language_file) {
     microscopy.use = parameters$microscopy_usage,
     rdt.nonadherence = parameters$rdt_nonadherence,
     fitness = parameters$fitness,
-    rdt.det = parameters$rdt_deleted, 
+    rdt.det = parameters$rdt_deleted,
     region = parameters$region,
     risk = "prospective",
     print = FALSE
@@ -82,8 +86,10 @@ plot_prospective_map <- function(parameters, language_file) {
   # Apply the styling for the app
   map  +
     scale_fill_manual(values = risk_palette, 
+                      limits = existing_labels,
                       labels = labels[[parameters$language]]$labels,
                       name = labels[[parameters$language]]$prospective_map,
+                      drop = FALSE,
                       guide = guide_legend(
                         title.position = "top",
                         title.theme = element_text(
@@ -95,5 +101,5 @@ plot_prospective_map <- function(parameters, language_file) {
                         )
                       )) +
     theme(legend.position = "bottom",
-          plot.margin=grid::unit(c(0, 0, 0, 0), "mm"))
+          plot.margin = grid::unit(c(0, 0, 0, 0), "mm"))
 }
