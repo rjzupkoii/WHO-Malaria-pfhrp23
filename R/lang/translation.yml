@@ -1,7 +1,7 @@
 en:
   choices: ["Optimistic", "Central", "Worst"]
   regions: ["Global", "Africa", "Asia", "Latin America"]
-  labels: ["High", "Moderate", "Slight", "Marginal", "No Data"]
+  labels: ["High", "Moderate", "Slight", "Marginal", "Non Endemic"]
   risk_map: "Innate Risk"
   prospective_map: "Prospective Risk"
 fr:
