@@ -120,15 +120,17 @@ ui <- fluidPage(
                   choices = regions_list_en, selected = 2),
     ),
 
-    # Language controls
-    wellPanel(
-      selectInput("language",
-                  label = i18n$t("Change Language"),
-                  choices = list("English" = "en",
-                                 "Español" = "es",
-                                 "Français" = "fr",
-                                 "Português" = "pt"),
-                  selected = i18n$get_translation_language())
+    # Language controls / Hide the panel for the pre-print
+    conditionalPanel('false',
+      wellPanel(
+        selectInput("language", 
+                    label = i18n$t("Change Language"),
+                    choices = list("English" = "en",
+                                   "Español" = "es",
+                                   "Français" = "fr",
+                                   "Português" = "pt"),
+                    selected = i18n$get_translation_language()),
+      )
     )
   ),
 
