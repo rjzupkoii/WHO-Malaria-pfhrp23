@@ -21,6 +21,18 @@ The HRP2/3 Deletion Risk Explorer is an R [Shiny](https://www.rstudio.com/produc
 
 ## Running in RStudio
 
+This repository uses [Git Large File Storage](https://git-lfs.com/), which will need to be installed:
+
+```bash
+sudo apt install git-lfs
+```
+
+Once LFS is installed, you can then pull the large files via:
+
+```bash
+git lfs pull
+```
+
 After this repository has been downloaded to your local machine and opened in RStudio, the dependencies can be installed via the following commands:
 
 ```R
