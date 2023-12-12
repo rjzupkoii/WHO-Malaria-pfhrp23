@@ -19,7 +19,7 @@ plot_choices_enum <- list(`1` = "best", `2` = "central", `3` = "worst")
 plot_regions_enum <- list(`1` = "global", `2` = "africa", `3` = "asia", `4` = "latam")
 
 # Read the map and label data in
-global_map <- readRDS("data/R6_WHO_Compliant_map.rds")
+global_map <- readRDS("data/map.rds")
 
 # Produce the HRP2 risk map
 plot_risk_map <- function(parameters, language_file) {
@@ -36,7 +36,8 @@ plot_risk_map <- function(parameters, language_file) {
     rdt.det = parameters$rdt_deleted,
     region = parameters$region,
     risk = "innate",
-    print = FALSE
+    print_bool = FALSE, 
+    lakes_bool = TRUE
   )
 
   # Remove any existing scale styling
@@ -51,15 +52,18 @@ plot_risk_map <- function(parameters, language_file) {
                       guide = guide_legend(
                         title.position = "top",
                         title.theme = element_text(
-                          size = 14,
+                          family = "Helvetica",
+                          size = 16,
                           face = "bold"
                         ),
                         label.theme = element_text(
-                          size = 12
+                          family = "Helvetica",
+                          size = 14
                         )
                       )) +
     theme(legend.position = "bottom",
-          plot.margin = grid::unit(c(0, 0, 0, 0), "mm"))
+          plot.margin = grid::unit(c(0, 0, 0, 0), "mm"), 
+          legend.key = element_rect(color = "black"))
 }
 
 # Produce the HRP2 prospective risk map
@@ -93,13 +97,16 @@ plot_prospective_map <- function(parameters, language_file) {
                       guide = guide_legend(
                         title.position = "top",
                         title.theme = element_text(
-                          size = 14,
+                          family = "Helvetica",
+                          size = 16,
                           face = "bold"
                         ),
                         label.theme = element_text(
-                          size = 12
+                          family = "Helvetica",
+                          size = 14
                         )
                       )) +
     theme(legend.position = "bottom",
-          plot.margin = grid::unit(c(0, 0, 0, 0), "mm"))
+          plot.margin = grid::unit(c(0, 0, 0, 0), "mm"),
+          legend.key = element_rect(color = "black"))
 }

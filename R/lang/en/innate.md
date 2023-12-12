@@ -6,4 +6,4 @@ Innate risk is a measure of how quickly *pfhrp2\/3* deletions are predicted to s
 - Medium Risk: >5% in 12 years
 - Low Risk: >5% in 20 years
 - Marginal Risk: <5% in 20 years
-- No data: Region was not included due to low to zero malaria prevalence
+- Non endemic: Region was not included due to low to zero malaria prevalence

@@ -1,3 +1,5 @@
+N.B. All other scripts in this directory apart from `hrpup_grab.R` are deprecated.
+
 
 # Data Enumerations
 HRP2 deletion risk (`hrp2_risk`, `hrp2_composite_risk`)
