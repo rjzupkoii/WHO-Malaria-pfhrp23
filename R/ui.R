@@ -60,6 +60,7 @@ ui <- fluidPage(
   # Sidebar panel for inputs
   sidebarPanel(
     bsCollapse(id = "side_panel",
+               open = "Treatment Seeking Rate",
 
       bsCollapsePanel("Treatment Seeking Rate",
         wellPanel(

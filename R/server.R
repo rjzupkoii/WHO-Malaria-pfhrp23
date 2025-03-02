@@ -33,13 +33,13 @@ parse_input <- function(input, output) {
   # Render the maps to the output object
   output$plot_innate <- renderPlot({
     plot_risk_map(parameters, translations_file)
-  }, height = 0.7 * as.numeric(input$dimension[2]),
+  }, height = 0.6 * as.numeric(input$dimension[2]),
      width = 0.6 * as.numeric(input$dimension[1])
   )
 
   output$plot_prospective <- renderPlot({
     plot_prospective_map(parameters, translations_file)
-  }, height = 0.7 * as.numeric(input$dimension[2]),
+  }, height = 0.6 * as.numeric(input$dimension[2]),
      width = 0.6 * as.numeric(input$dimension[1])
   )
 }
