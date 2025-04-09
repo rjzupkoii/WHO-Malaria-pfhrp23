@@ -5,6 +5,7 @@
 # that is specific to the web environment.
 library(ggplot2)
 library(magrittr)
+library(dplyr)
 library(sf)
 library(yaml)
 
