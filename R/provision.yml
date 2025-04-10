@@ -1,6 +1,7 @@
 packages:
   - dplyr
   - ggplot2
+  - ggspatial
   - magrittr
   - markdown
   - rjson

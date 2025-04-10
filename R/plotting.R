@@ -4,6 +4,7 @@
 # We assume that the caller (i.e., server.R) will handle all of the processing
 # that is specific to the web environment.
 library(ggplot2)
+library(ggspatial)
 library(magrittr)
 library(dplyr)
 library(sf)
